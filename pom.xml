@@ -69,6 +69,7 @@
                                 <include>timer/**</include>
                                 <include>tooltip/**</include>
                                 <include>waypoint/**</include>
+                                <include>sdashboard/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>
