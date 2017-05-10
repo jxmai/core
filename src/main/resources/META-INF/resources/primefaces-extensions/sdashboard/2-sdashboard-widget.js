@@ -12,22 +12,22 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
         var opts = $.extend(true, {}, cfg);
 
         // create the Sdashboard
-//        this.jq.sDashboard(opts);
+        this.jq.sDashboard({dashboardData : JSON.parse(opts.dashboardData)});
         
-        var randomString = "Lorem ipsum dolor sit amet,consectetur adipiscing elit. Aenean lacinia mollis condimentum. Proin vitae ligula quis ipsum elementum tristique. Vestibulum ut sem erat.";
-        
-        var dashboardJSON = [ {
-            widgetTitle : "Text Widget",
-            widgetId : "id2",
-            enableRefresh : true,
-            refreshCallBack : function(widgetId){
-                return randomString + new Date();
-            },
-            widgetContent : randomString
-        }]
-
-        this.jq.sDashboard({
-        	dashboardData : dashboardJSON
-        })
+//        var randomString = "Lorem ipsum dolor sit amet,consectetur adipiscing elit. Aenean lacinia mollis condimentum. Proin vitae ligula quis ipsum elementum tristique. Vestibulum ut sem erat.";
+//        
+//        var dashboardJSON = [ {
+//            widgetTitle : "Text Widget",
+//            widgetId : "id2",
+//            enableRefresh : true,
+//            refreshCallBack : function(widgetId){
+//                return randomString + new Date();
+//            },
+//            widgetContent : randomString
+//        }]
+//
+//        this.jq.sDashboard({
+//        	dashboardData : dashboardJSON
+//        })
     }
 });

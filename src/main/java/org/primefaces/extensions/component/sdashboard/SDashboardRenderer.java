@@ -54,19 +54,14 @@ public class SDashboardRenderer extends CoreRenderer {
         
         
         JSONObject object = new JSONObject();
-        object.put("widgetTitle", "Text Widget");
-        object.put("widgetId", "id2");
+        object.put("widgetTitle", sDashBoard.getWidgetTitle());
+        object.put("widgetId", sDashBoard.getWidgetId());
+        //TODO: to add enableRefresh option
         object.put("enableRefresh", true);
-        object.put("widgetContent", "sdfsadfasdfasdsdf");
-        
+        object.put("widgetContent", sDashBoard.getWidgetContent());
         
         wb.attr("dashboardData", "[" + object.toString() + "]");
         
-        
-        
-//        wb.attr("widgetId", sDashBoard.getWidgetId());
-//        wb.attr("widgetTitle", sDashBoard.getWidgetTitle());
-//        wb.attr("widgetContent", sDashBoard.getWidgetContent());
         wb.finish();
     }
 }
