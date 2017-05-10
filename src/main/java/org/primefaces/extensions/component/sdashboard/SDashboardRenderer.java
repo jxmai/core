@@ -31,11 +31,12 @@ public class SDashboardRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = sDashBoard.getClientId();
         final String widgetVar = sDashBoard.resolveWidgetVar();
-
-        writer.startElement("div", sDashBoard);
+        
+        writer.startElement("ul", sDashBoard);
+        writer.writeAttribute("style", "display: inline-block", "style");
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
-        writer.endElement("div");
+        writer.endElement("ul");
     }
 
     /**
