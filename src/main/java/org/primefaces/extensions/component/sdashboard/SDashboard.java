@@ -3,6 +3,7 @@ package org.primefaces.extensions.component.sdashboard;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
+import javax.faces.component.behavior.ClientBehaviorHolder;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
@@ -15,14 +16,14 @@ import org.primefaces.util.ComponentUtils;
         @ResourceDependency(library = "primefaces-extensions", name = "sdashboard/sdashboard.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "sdashboard/sdashboard.css")
 })
-public class SDashboard extends UIComponentBase implements Widget {
+public class SDashboard extends UIComponentBase implements Widget, ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SDashboard";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SDashboardRenderer";
 
     protected enum PropertyKeys {
-        widgetVar, widgetId, widgetTitle, widgetContent;
+        widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack;
 
         String toString;
 
@@ -83,6 +84,14 @@ public class SDashboard extends UIComponentBase implements Widget {
 
     public void setWidgetContent(final String _widgetContent) {
         getStateHelper().put(PropertyKeys.widgetContent, _widgetContent);
+    }
+
+    public String getOnRefreshCallBack() {
+        return (String) getStateHelper().eval(PropertyKeys.onRefreshCallBack, null);
+    }
+
+    public void setOnRefreshCallBack(final String _onRefreshCallBack) {
+        getStateHelper().put(PropertyKeys.onRefreshCallBack, _onRefreshCallBack);
     }
 
 }

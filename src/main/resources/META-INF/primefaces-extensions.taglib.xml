@@ -4360,5 +4360,11 @@
             <required>false</required>
             <type>java.lang.String</type>
         </attribute>
+        <attribute>
+        	<description><![CDATA[Refresh Callback]]></description>
+        	<name>onRefreshCallBack</name>
+        	<required>false</required>
+        	<type>java.lang.String</type>
+        </attribute>
     </tag>
 </facelet-taglib>

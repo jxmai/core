@@ -61,7 +61,13 @@ public class SDashboardRenderer extends CoreRenderer {
         object.put("enableRefresh", true);
         object.put("widgetContent", sDashBoard.getWidgetContent());
         
+        if(sDashBoard.getOnRefreshCallBack() != null) {
+            wb.callback("refreshCallBack", "function(widgetId)", sDashBoard.getOnRefreshCallBack());
+        }
+        
         wb.attr("dashboardData", "[" + object.toString() + "]");
+        
+        encodeClientBehaviors(context, sDashBoard);
         
         wb.finish();
     }
