@@ -1,12 +1,22 @@
 package org.primefaces.extensions.component.sdashboard;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.SDashboardRefreshEvent;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 @ResourceDependencies({
         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
@@ -21,6 +31,9 @@ public class SDashboard extends UIComponentBase implements Widget, ClientBehavio
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SDashboard";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SDashboardRenderer";
+
+    private static final Collection<String> EVENT_NAMES = Collections
+            .unmodifiableCollection(Arrays.asList(SDashboardRefreshEvent.NAME));
 
     protected enum PropertyKeys {
         widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack;
@@ -47,6 +60,43 @@ public class SDashboard extends UIComponentBase implements Widget, ClientBehavio
     @Override
     public String getFamily() {
         return COMPONENT_FAMILY;
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public String getDefaultEventName() {
+        return SDashboardRefreshEvent.NAME;
+    }
+
+    @Override
+    public void processDecodes(FacesContext fc) {
+        if (isSelfRequest(fc)) {
+            decode(fc);
+        } else {
+            super.processDecodes(fc);
+        }
+    }
+
+    @Override
+    public void queueEvent(FacesEvent event) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+
+        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+            Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+
+            if (SDashboardRefreshEvent.NAME.equals(eventName)) {
+                SDashboardRefreshEvent sDashboardRefreshEvent = new SDashboardRefreshEvent(this,
+                        behaviorEvent.getBehavior());
+                sDashboardRefreshEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(sDashboardRefreshEvent);
+            }
+        }
     }
 
     @Override
@@ -92,6 +142,12 @@ public class SDashboard extends UIComponentBase implements Widget, ClientBehavio
 
     public void setOnRefreshCallBack(final String _onRefreshCallBack) {
         getStateHelper().put(PropertyKeys.onRefreshCallBack, _onRefreshCallBack);
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                .equals(context.getExternalContext().getRequestParameterMap().get(
+                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
 }

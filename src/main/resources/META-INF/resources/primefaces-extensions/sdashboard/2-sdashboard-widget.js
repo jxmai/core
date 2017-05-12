@@ -24,6 +24,10 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
         
         this.jq.sDashboard({dashboardData : data});
         
+        // bind "refresh" event
+        
+        this._bindEvents();
+        
 //        var randomString = "Lorem ipsum dolor sit amet,consectetur adipiscing elit. Aenean lacinia mollis condimentum. Proin vitae ligula quis ipsum elementum tristique. Vestibulum ut sem erat.";
 //        
 //        var dashboardJSON = [ {
@@ -39,5 +43,18 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
 //        this.jq.sDashboard({
 //        	dashboardData : dashboardJSON
 //        })
+    },
+    _bindEvents : function() {
+    	var $this = this;
+    	
+    	this.jq.on("sdashboardrefresh", function() {
+    		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['refresh'] : null;
+    		if (behavior) {
+                var options = {};
+                behavior.call($this, options);
+            }
+    	});
+    		
+    	
     }
 });

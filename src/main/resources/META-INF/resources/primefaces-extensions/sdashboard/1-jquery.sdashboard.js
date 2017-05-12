@@ -154,6 +154,8 @@
 					} else {
 						self._refreshRegularWidget(widgetDefinition, widget);
 					}
+					
+					$(this).trigger('sdashboardrefresh');
 
 				});
 

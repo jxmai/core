@@ -31,12 +31,17 @@ public class SDashboardRenderer extends CoreRenderer {
         final ResponseWriter writer = context.getResponseWriter();
         final String clientId = sDashBoard.getClientId();
         final String widgetVar = sDashBoard.resolveWidgetVar();
-        
+
         writer.startElement("ul", sDashBoard);
         writer.writeAttribute("style", "display: inline-block", "style");
         writer.writeAttribute("id", clientId, "id");
         writer.writeAttribute(HTML.WIDGET_VAR, widgetVar, null);
         writer.endElement("ul");
+    }
+
+    @Override
+    public void decode(FacesContext context, UIComponent component) {
+        decodeBehaviors(context, component);
     }
 
     /**
@@ -51,24 +56,22 @@ public class SDashboardRenderer extends CoreRenderer {
         final String clientId = sDashBoard.getClientId(context);
 
         wb.initWithDomReady("ExtSDashboard", sDashBoard.resolveWidgetVar(), clientId);
-        
-        
-        
+
         JSONObject object = new JSONObject();
         object.put("widgetTitle", sDashBoard.getWidgetTitle());
         object.put("widgetId", sDashBoard.getWidgetId());
-        //TODO: to add enableRefresh option
+        // TODO: to add enableRefresh option
         object.put("enableRefresh", true);
         object.put("widgetContent", sDashBoard.getWidgetContent());
-        
-        if(sDashBoard.getOnRefreshCallBack() != null) {
+
+        if (sDashBoard.getOnRefreshCallBack() != null) {
             wb.callback("refreshCallBack", "function(widgetId)", sDashBoard.getOnRefreshCallBack());
         }
-        
+
         wb.attr("dashboardData", "[" + object.toString() + "]");
-        
+
         encodeClientBehaviors(context, sDashBoard);
-        
+
         wb.finish();
     }
 }
