@@ -8,6 +8,8 @@ public class DefaultSDashboardModel {
 
     private String widgetContent;
 
+    private boolean enableRefresh;
+
     public DefaultSDashboardModel() {
         super();
     }
@@ -17,6 +19,15 @@ public class DefaultSDashboardModel {
         this.widgetTitle = widgetTitle;
         this.widgetId = widgetId;
         this.widgetContent = widgetContent;
+    }
+
+    public DefaultSDashboardModel(String widgetTitle, String widgetId, String widgetContent,
+            boolean enableRefresh) {
+        super();
+        this.widgetTitle = widgetTitle;
+        this.widgetId = widgetId;
+        this.widgetContent = widgetContent;
+        this.enableRefresh = enableRefresh;
     }
 
     public String getWidgetTitle() {
@@ -41,6 +52,14 @@ public class DefaultSDashboardModel {
 
     public void setWidgetContent(String widgetContent) {
         this.widgetContent = widgetContent;
+    }
+
+    public boolean isEnableRefresh() {
+        return enableRefresh;
+    }
+
+    public void setEnableRefresh(boolean enableRefresh) {
+        this.enableRefresh = enableRefresh;
     }
 
 }

@@ -21,7 +21,10 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
         if(this.cfg.refreshCallBack){
         	
         	for(let i = 0; i < data.length; i++) {
-        		data[i]['refreshCallBack'] = this.cfg.refreshCallBack;
+        		
+        		if(data[i]['enableRefresh']) {
+        			data[i]['refreshCallBack'] = this.cfg.refreshCallBack;
+        		}
         	}
         }
         
