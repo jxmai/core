@@ -1,11 +1,13 @@
 package org.primefaces.extensions.component.sdashboard;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
@@ -55,20 +57,38 @@ public class SDashboardRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = sDashBoard.getClientId(context);
 
+        List<DefaultSDashboardModel> defaultSDashboardModels = (List<DefaultSDashboardModel>) sDashBoard
+                .getValue();
+
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < defaultSDashboardModels.size(); i++) {
+            DefaultSDashboardModel currentModel = defaultSDashboardModels.get(i);
+            JSONObject object = new JSONObject();
+            object.put("widgetTitle", currentModel.getWidgetTitle());
+            object.put("widgetId", currentModel.getWidgetId());
+            object.put("enableRefresh", true);
+            object.put("widgetContent", currentModel.getWidgetContent());
+
+            jsonArray.put(object);
+
+        }
+
         wb.initWithDomReady("ExtSDashboard", sDashBoard.resolveWidgetVar(), clientId);
 
-        JSONObject object = new JSONObject();
-        object.put("widgetTitle", sDashBoard.getWidgetTitle());
-        object.put("widgetId", sDashBoard.getWidgetId());
+        // JSONObject object = new JSONObject();
+        // object.put("widgetTitle", sDashBoard.getWidgetTitle());
+        // object.put("widgetId", sDashBoard.getWidgetId());
         // TODO: to add enableRefresh option
-        object.put("enableRefresh", true);
-        object.put("widgetContent", sDashBoard.getWidgetContent());
+        // object.put("enableRefresh", true);
+        // object.put("widgetContent", sDashBoard.getWidgetContent());
 
         if (sDashBoard.getOnRefreshCallBack() != null) {
             wb.callback("refreshCallBack", "function(widgetId)", sDashBoard.getOnRefreshCallBack());
         }
 
-        wb.attr("dashboardData", "[" + object.toString() + "]");
+        // wb.attr("dashboardData", "[" + object.toString() + "]");
+
+        wb.attr("dashboardData", jsonArray.toString());
 
         encodeClientBehaviors(context, sDashBoard);
 

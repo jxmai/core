@@ -7,12 +7,12 @@ import java.util.Map;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponentBase;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.FacesEvent;
 
+import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.SDashboardRefreshEvent;
 import org.primefaces.util.ComponentUtils;
@@ -26,7 +26,7 @@ import org.primefaces.util.Constants;
         @ResourceDependency(library = "primefaces-extensions", name = "sdashboard/sdashboard.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "sdashboard/sdashboard.css")
 })
-public class SDashboard extends UIComponentBase implements Widget, ClientBehaviorHolder {
+public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.SDashboard";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";

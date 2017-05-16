@@ -19,7 +19,10 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
         
         //callbacks
         if(this.cfg.refreshCallBack){
-        	data[0]['refreshCallBack'] = this.cfg.refreshCallBack;
+        	
+        	for(let i = 0; i < data.length; i++) {
+        		data[i]['refreshCallBack'] = this.cfg.refreshCallBack;
+        	}
         }
         
         this.jq.sDashboard({dashboardData : data});
