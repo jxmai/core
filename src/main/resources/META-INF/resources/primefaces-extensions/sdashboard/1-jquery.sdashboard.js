@@ -54,22 +54,42 @@
 
 				var that = this;
 				//call the jquery ui sortable on the columns
+//				this.element.sortable({
+//					handle : ".sDashboardWidgetHeader",
+//					start : function(event, ui) {
+//						ui.item.startPosition = ui.item.index();
+//					},
+//					update : function(event, ui) {
+//						var newPosition = ui.item.index();
+//						_dashboardData.splice.apply(
+//							_dashboardData,
+//							[newPosition, 0].concat(_dashboardData.splice(ui.item.startPosition, 1))
+//						);
+//
+//						that._trigger("stateChanged", null, {
+//							triggerAction: 'orderChanged',
+//							affectedWidget: _dashboardData[newPosition]}
+//						);
+//					}
+//				});
+				
 				this.element.sortable({
 					handle : ".sDashboardWidgetHeader",
-					start : function(event, ui) {
-						ui.item.startPosition = ui.item.index();
-					},
 					update : function(event, ui) {
-						var newPosition = ui.item.index();
-						_dashboardData.splice.apply(
-							_dashboardData,
-							[newPosition, 0].concat(_dashboardData.splice(ui.item.startPosition, 1))
-						);
+						var sortOrderArray = $(this).sortable('toArray');
+						var sortedDefinitions = [];
+						for ( i = 0; i < sortOrderArray.length; i++) {
+							var widgetContent = that._getWidgetContentForId(sortOrderArray[i], that);
+							sortedDefinitions.push(widgetContent);
+						}
 
-						that._trigger("stateChanged", null, {
-							triggerAction: 'orderChanged',
-							affectedWidget: _dashboardData[newPosition]}
-						);
+						if (sortedDefinitions.length > 0) {
+							var evtData = {
+								sortedDefinitions : sortedDefinitions
+							};
+							that._trigger("orderchanged", null, evtData);
+						}
+
 					}
 				});
 

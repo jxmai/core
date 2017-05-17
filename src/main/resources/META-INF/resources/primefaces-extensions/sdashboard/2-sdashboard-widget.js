@@ -60,6 +60,15 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
                 behavior.call($this, options);
             }
     	});
+    	
+    	this.jq.bind("sdashboardorderchanged", function(e, data) {
+    		if (console) {
+                console.log("Sorted Array");
+                console.log("+++++++++++++++++++++++++");
+                console.log(data.sortedDefinitions);
+                console.log("+++++++++++++++++++++++++");
+            }
+    	});
     		
     	
     }
