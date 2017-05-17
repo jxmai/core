@@ -74,7 +74,7 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
     			var options = {
                         params : [ {
                             name : $this.id + '_sortedDefinitions',
-                            value : data
+                            value : JSON.stringify(data)
                         }]
                     };
     			behavior.call($this, options);

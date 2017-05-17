@@ -100,10 +100,10 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
                 super.queueEvent(sDashboardRefreshEvent);
             } else if (SDashboardReorderEvent.NAME.equals(eventName)) {
 
-                Object sortedDefinitions = params.get(clientId + "_sortedDefinitions");
+                String sortedDefinitionsJSONString = params.get(clientId + "_sortedDefinitions");
 
                 SDashboardReorderEvent sDashboardReorderEvent = new SDashboardReorderEvent(this,
-                        behaviorEvent.getBehavior(), sortedDefinitions);
+                        behaviorEvent.getBehavior(), sortedDefinitionsJSONString);
                 sDashboardReorderEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(sDashboardReorderEvent);
 

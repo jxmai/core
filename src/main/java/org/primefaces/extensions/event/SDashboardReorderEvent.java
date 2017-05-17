@@ -10,20 +10,20 @@ public class SDashboardReorderEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "reorder";
 
-    private Object sortedDefinitions;
+    private String sortedDefinitionsJSONString;
 
     public SDashboardReorderEvent(UIComponent component, Behavior behavior,
-            Object sortedDefinitions) {
+            String sortedDefinitionsJSONString) {
         super(component, behavior);
-        this.sortedDefinitions = sortedDefinitions;
+        this.sortedDefinitionsJSONString = sortedDefinitionsJSONString;
     }
 
-    public Object getSortedDefinitions() {
-        return sortedDefinitions;
+    public String getSortedDefinitionsJSONString() {
+        return sortedDefinitionsJSONString;
     }
 
-    public void setSortedDefinitions(Object sortedDefinitions) {
-        this.sortedDefinitions = sortedDefinitions;
+    public void setSortedDefinitionsJSONString(String sortedDefinitionsJSONString) {
+        this.sortedDefinitionsJSONString = sortedDefinitionsJSONString;
     }
 
 }
