@@ -15,6 +15,7 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.SDashboardRefreshEvent;
+import org.primefaces.extensions.event.SDashboardReorderEvent;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
@@ -33,7 +34,8 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.SDashboardRenderer";
 
     private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(SDashboardRefreshEvent.NAME));
+            .unmodifiableCollection(
+                    Arrays.asList(SDashboardRefreshEvent.NAME, SDashboardReorderEvent.NAME));
 
     protected enum PropertyKeys {
         widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack;
@@ -89,12 +91,22 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
             Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
             String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
             AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final String clientId = this.getClientId(fc);
 
             if (SDashboardRefreshEvent.NAME.equals(eventName)) {
                 SDashboardRefreshEvent sDashboardRefreshEvent = new SDashboardRefreshEvent(this,
                         behaviorEvent.getBehavior());
                 sDashboardRefreshEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(sDashboardRefreshEvent);
+            } else if (SDashboardReorderEvent.NAME.equals(eventName)) {
+
+                Object sortedDefinitions = params.get(clientId + "_sortedDefinitions");
+
+                SDashboardReorderEvent sDashboardReorderEvent = new SDashboardReorderEvent(this,
+                        behaviorEvent.getBehavior(), sortedDefinitions);
+                sDashboardReorderEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(sDashboardReorderEvent);
+
             }
         }
     }

@@ -68,6 +68,18 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
                 console.log(data.sortedDefinitions);
                 console.log("+++++++++++++++++++++++++");
             }
+    		
+    		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['reorder'] : null;
+    		if(behavior) {
+    			var options = {
+                        params : [ {
+                            name : $this.id + '_sortedDefinitions',
+                            value : data
+                        }]
+                    };
+    			behavior.call($this, options);
+    		}
+    		
     	});
     		
     	
