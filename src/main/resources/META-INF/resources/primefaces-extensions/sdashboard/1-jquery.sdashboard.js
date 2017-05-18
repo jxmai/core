@@ -178,6 +178,15 @@
 					$(this).trigger('sdashboardrefresh');
 
 				});
+				
+				this.element.on("click", ".sDashboardWidgetHeader .fa-long-arrow-down", function(e) {
+					var widget = $(e.currentTarget).parents("li:first");
+					var widgetId = widget.attr("id");
+					var widgetDefinition = self._getWidgetContentForId(widgetId, self);
+					
+					$(this).trigger('sdashboardexpand',[widgetDefinition]);
+					
+				});
 
 				//delete widget by clicking the 'x' icon on the widget
 				this.element.on("click", ".sDashboardWidgetHeader div.sDashboard-icon.sDashboard-circle-remove-icon ", function(e) {
@@ -222,17 +231,21 @@
 				var maximizeButton = $('<div title="Maximize" class="sDashboard-icon sDashboard-circle-plus-icon "></span>');
 
 				var deleteButton = $('<div title="Close" class="sDashboard-icon sDashboard-circle-remove-icon"></div>');
+				
+				var expandButton = $('<a href="#" title="expand"><i class="fa fa-long-arrow-down" aria-hidden="true" style="float:right"></i></a>');
 
 				//add delete button
 				widgetHeader.append(deleteButton);
 				//add Maximizebutton
 				widgetHeader.append(maximizeButton);
-
+				
 				if (widgetDefinition.hasOwnProperty("enableRefresh") && widgetDefinition.enableRefresh) {
 					var refreshButton = $('<div title="Refresh" class="sDashboard-icon sDashboard-refresh-icon "></div>');
 					//add refresh button
 					widgetHeader.append(refreshButton);
 				}
+				
+				widgetHeader.append(expandButton);
 
 				//add widget title
 				widgetHeader.append(widgetDefinition.widgetTitle);

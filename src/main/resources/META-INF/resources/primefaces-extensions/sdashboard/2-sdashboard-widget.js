@@ -61,6 +61,19 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
             }
     	});
     	
+    	this.jq.on("sdashboardexpand", function(e,widgetDefinition) {
+    		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['expand'] : null;
+    		if (behavior) {
+    			var options = {
+    					 params : [ {
+                             name : $this.id + '_widgetDefinitions',
+                             value : JSON.stringify(widgetDefinition)
+                         }]
+    			};
+    			behavior.call($this, options);
+    		}
+    	});
+    	
     	this.jq.bind("sdashboardorderchanged", function(e, data) {
     		if (console) {
                 console.log("Sorted Array");
