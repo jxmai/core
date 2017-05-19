@@ -3,6 +3,7 @@ package org.primefaces.extensions.component.sdashboard;
 import java.io.IOException;
 import java.util.List;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
@@ -57,8 +58,13 @@ public class SDashboardRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = sDashBoard.getClientId(context);
 
-        List<DefaultSDashboardModel> defaultSDashboardModels = (List<DefaultSDashboardModel>) sDashBoard
+        @SuppressWarnings("unchecked")
+	List<DefaultSDashboardModel> defaultSDashboardModels = (List<DefaultSDashboardModel>) sDashBoard
                 .getValue();
+        
+        if(null == defaultSDashboardModels) {
+            throw new FacesException("SDashboard must implement a model. Please provide a valid value attribute!");
+        }
 
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < defaultSDashboardModels.size(); i++) {
