@@ -10,6 +10,9 @@ public class DefaultSDashboardModel {
 
     private boolean enableRefresh;
 
+    // Default true
+    private boolean enableExpand = true;
+
     public DefaultSDashboardModel() {
         super();
     }
@@ -60,6 +63,14 @@ public class DefaultSDashboardModel {
 
     public void setEnableRefresh(boolean enableRefresh) {
         this.enableRefresh = enableRefresh;
+    }
+
+    public boolean isEnableExpand() {
+        return enableExpand;
+    }
+
+    public void setEnableExpand(boolean enableExpand) {
+        this.enableExpand = enableExpand;
     }
 
 }

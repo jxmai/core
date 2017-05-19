@@ -74,6 +74,7 @@ public class SDashboardRenderer extends CoreRenderer {
             object.put("widgetId", currentModel.getWidgetId());
             object.put("enableRefresh", currentModel.isEnableRefresh());
             object.put("widgetContent", currentModel.getWidgetContent());
+            object.put("enableExpand", currentModel.isEnableExpand());
 
             jsonArray.put(object);
 

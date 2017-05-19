@@ -245,7 +245,9 @@
 					widgetHeader.append(refreshButton);
 				}
 				
-				widgetHeader.append(expandButton);
+				if(widgetDefinition.hasOwnProperty("enableExpand") && widgetDefinition.enableExpand) {
+					widgetHeader.append(expandButton);
+				}
 
 				//add widget title
 				widgetHeader.append(widgetDefinition.widgetTitle);
