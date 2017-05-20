@@ -233,6 +233,8 @@
 				var deleteButton = $('<div title="Close" class="sDashboard-icon sDashboard-circle-remove-icon"></div>');
 				
 				var expandButton = $('<a href="#" title="expand"><i class="fa fa-long-arrow-down" aria-hidden="true" style="float:right"></i></a>');
+				
+				var addButton = $('<a href="#" title="add"><i class="fa fa-plus" aria-hidden="true" style="float:right;padding-right: 9px;"></i></a>');
 
 				//add delete button
 				widgetHeader.append(deleteButton);
@@ -248,6 +250,8 @@
 				if(widgetDefinition.hasOwnProperty("enableExpand") && widgetDefinition.enableExpand) {
 					widgetHeader.append(expandButton);
 				}
+				
+				widgetHeader.append(addButton);
 
 				//add widget title
 				widgetHeader.append(widgetDefinition.widgetTitle);
