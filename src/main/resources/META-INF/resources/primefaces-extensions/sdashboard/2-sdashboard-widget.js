@@ -28,6 +28,13 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
         	}
         }
         
+        if(this.cfg.addCallBack) {
+        	for(let i = 0; i < data.length; i++) {
+        		// TODO: to add a conditional statement to toggle addCallBack
+        		data[i]['addCallBack'] = this.cfg.addCallBack;
+        	}
+        }
+        
         this.jq.sDashboard({dashboardData : data});
         
         // bind "refresh" event

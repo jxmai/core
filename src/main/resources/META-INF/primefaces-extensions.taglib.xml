@@ -4373,5 +4373,11 @@
         	<required>false</required>
         	<type>java.lang.String</type>
         </attribute>
+        <attribute>
+        	<description><![CDATA[Add Callback]]></description>
+        	<name>onAddCallBack</name>
+        	<required>true</required>
+        	<type>java.lang.String</type>
+        </attribute>
     </tag>
 </facelet-taglib>

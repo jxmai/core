@@ -40,7 +40,7 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
                             SDashboardExpandEvent.NAME));
 
     protected enum PropertyKeys {
-        widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack;
+        widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack, onAddCallBack;
 
         String toString;
 
@@ -163,6 +163,14 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
 
     public void setOnRefreshCallBack(final String _onRefreshCallBack) {
         getStateHelper().put(PropertyKeys.onRefreshCallBack, _onRefreshCallBack);
+    }
+    
+    public String getOnAddCallBack() {
+    	return (String) getStateHelper().eval(PropertyKeys.onAddCallBack, null);
+    }
+    
+    public void setOnAddCallBack(final String _onAddCallBack) {
+    	getStateHelper().put(PropertyKeys.onAddCallBack, _onAddCallBack);
     }
 
     private boolean isSelfRequest(final FacesContext context) {

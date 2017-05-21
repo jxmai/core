@@ -92,6 +92,10 @@ public class SDashboardRenderer extends CoreRenderer {
         if (sDashBoard.getOnRefreshCallBack() != null) {
             wb.callback("refreshCallBack", "function(widgetId)", sDashBoard.getOnRefreshCallBack());
         }
+        
+        if (sDashBoard.getOnAddCallBack() != null) {
+        	wb.callback("addCallBack", "function(widgetId)", sDashBoard.getOnAddCallBack());
+        }
 
         // wb.attr("dashboardData", "[" + object.toString() + "]");
 
