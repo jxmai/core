@@ -4376,7 +4376,7 @@
         <attribute>
         	<description><![CDATA[Add Callback]]></description>
         	<name>onAddCallBack</name>
-        	<required>true</required>
+        	<required>false</required>
         	<type>java.lang.String</type>
         </attribute>
     </tag>
