@@ -259,7 +259,9 @@
 					widgetHeader.append(expandButton);
 				}
 				
-				widgetHeader.append(addButton);
+				if(widgetDefinition.hasOwnProperty("enableAdd") && widgetDefinition.enableAdd) {
+					widgetHeader.append(addButton);
+				}
 
 				//add widget title
 				widgetHeader.append(widgetDefinition.widgetTitle);

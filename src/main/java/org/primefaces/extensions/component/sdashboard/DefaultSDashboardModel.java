@@ -12,6 +12,8 @@ public class DefaultSDashboardModel {
 
     // Default true
     private boolean enableExpand = true;
+    
+    private boolean enableAdd = true;
 
     public DefaultSDashboardModel() {
         super();
@@ -72,5 +74,13 @@ public class DefaultSDashboardModel {
     public void setEnableExpand(boolean enableExpand) {
         this.enableExpand = enableExpand;
     }
+
+	public boolean isEnableAdd() {
+		return enableAdd;
+	}
+
+	public void setEnableAdd(boolean enableAdd) {
+		this.enableAdd = enableAdd;
+	}
 
 }
