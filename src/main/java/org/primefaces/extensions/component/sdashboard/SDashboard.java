@@ -14,6 +14,7 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.SDashboardExpandEvent;
 import org.primefaces.extensions.event.SDashboardRefreshEvent;
 import org.primefaces.extensions.event.SDashboardReorderEvent;
@@ -37,7 +38,7 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
     private static final Collection<String> EVENT_NAMES = Collections
             .unmodifiableCollection(
                     Arrays.asList(SDashboardRefreshEvent.NAME, SDashboardReorderEvent.NAME,
-                            SDashboardExpandEvent.NAME));
+                            SDashboardExpandEvent.NAME,CloseEvent.NAME));
 
     protected enum PropertyKeys {
         widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack, onAddCallBack;
@@ -116,6 +117,10 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
                         behaviorEvent.getBehavior(), widgetDefinitionJSONString);
                 sDashboardExpandEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(sDashboardExpandEvent);
+            } else if(CloseEvent.NAME.equals(eventName)) {
+            	CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
+            	closeEvent.setPhaseId(event.getPhaseId());
+            	super.queueEvent(closeEvent);
             }
         }
     }

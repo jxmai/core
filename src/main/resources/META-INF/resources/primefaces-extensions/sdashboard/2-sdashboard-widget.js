@@ -68,6 +68,14 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
             }
     	});
     	
+    	this.jq.on("sdashboardClose", function() {
+    		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
+    		if (behavior) {
+                var options = {};
+                behavior.call($this, options);
+            }
+    	});
+    	
     	this.jq.on("sdashboardexpand", function(e,widgetDefinition) {
     		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['expand'] : null;
     		if (behavior) {

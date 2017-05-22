@@ -205,6 +205,7 @@
 						$(this).remove();
 						$(".sDashboard-overlay").hide();
 					});
+					$(this).trigger('sdashboardClose');
 				});
 
 				//table row click
