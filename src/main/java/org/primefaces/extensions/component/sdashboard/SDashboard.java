@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
+import javax.faces.component.behavior.Behavior;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -15,6 +16,7 @@ import javax.faces.event.FacesEvent;
 import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.SDashboardDeleteEvent;
 import org.primefaces.extensions.event.SDashboardExpandEvent;
 import org.primefaces.extensions.event.SDashboardRefreshEvent;
 import org.primefaces.extensions.event.SDashboardReorderEvent;
@@ -38,7 +40,7 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
     private static final Collection<String> EVENT_NAMES = Collections
             .unmodifiableCollection(
                     Arrays.asList(SDashboardRefreshEvent.NAME, SDashboardReorderEvent.NAME,
-                            SDashboardExpandEvent.NAME,CloseEvent.NAME));
+                            SDashboardExpandEvent.NAME, SDashboardDeleteEvent.NAME));
 
     protected enum PropertyKeys {
         widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack, onAddCallBack;
@@ -117,10 +119,13 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
                         behaviorEvent.getBehavior(), widgetDefinitionJSONString);
                 sDashboardExpandEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(sDashboardExpandEvent);
-            } else if(CloseEvent.NAME.equals(eventName)) {
-            	CloseEvent closeEvent = new CloseEvent(this, behaviorEvent.getBehavior());
-            	closeEvent.setPhaseId(event.getPhaseId());
-            	super.queueEvent(closeEvent);
+            } else if (SDashboardDeleteEvent.NAME.equals(eventName)) {
+                String deletedWidgetId = params.get(clientId + "_widgetId");
+
+                SDashboardDeleteEvent sDashboardDeleteEvent = new SDashboardDeleteEvent(this,
+                        behaviorEvent.getBehavior(), deletedWidgetId);
+                sDashboardDeleteEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(sDashboardDeleteEvent);
             }
         }
     }
@@ -169,13 +174,13 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
     public void setOnRefreshCallBack(final String _onRefreshCallBack) {
         getStateHelper().put(PropertyKeys.onRefreshCallBack, _onRefreshCallBack);
     }
-    
+
     public String getOnAddCallBack() {
-    	return (String) getStateHelper().eval(PropertyKeys.onAddCallBack, null);
+        return (String) getStateHelper().eval(PropertyKeys.onAddCallBack, null);
     }
-    
+
     public void setOnAddCallBack(final String _onAddCallBack) {
-    	getStateHelper().put(PropertyKeys.onAddCallBack, _onAddCallBack);
+        getStateHelper().put(PropertyKeys.onAddCallBack, _onAddCallBack);
     }
 
     private boolean isSelfRequest(final FacesContext context) {

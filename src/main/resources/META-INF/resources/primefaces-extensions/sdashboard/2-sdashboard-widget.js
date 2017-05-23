@@ -68,10 +68,26 @@ PrimeFaces.widget.ExtSDashboard = PrimeFaces.widget.BaseWidget.extend({
             }
     	});
     	
-    	this.jq.on("sdashboardClose", function() {
-    		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
+    
+    	// TODO: to be removed
+//    	this.jq.on("sdashboardClose", function() {
+//    		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['close'] : null;
+//    		if (behavior) {
+//                var options = {};
+//                behavior.call($this, options);
+//            }
+//    	});
+    	
+    	
+    	this.jq.on("sdashboardRemove", function(e,widgetId) {
+    		var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['delete'] : null;
     		if (behavior) {
-                var options = {};
+                var options = {
+                		params : [ {
+                            name : $this.id + '_widgetId',
+                            value : widgetId
+                        }]
+                };
                 behavior.call($this, options);
             }
     	});

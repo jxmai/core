@@ -199,13 +199,16 @@
 				//delete widget by clicking the 'x' icon on the widget
 				this.element.on("click", ".sDashboardWidgetHeader div.sDashboard-icon.sDashboard-circle-remove-icon ", function(e) {
 					var widget = $(e.currentTarget).parents("li:first");
+					var widgetId = widget.attr("id");
 					//show hide effect
 					widget.hide("fold", {}, 300, function() {
 						self._removeWidgetFromWidgetDefinitions(this.id);
 						$(this).remove();
 						$(".sDashboard-overlay").hide();
 					});
-					$(this).trigger('sdashboardClose');
+					// TODO: to be removed
+//					$(this).trigger('sdashboardClose');
+					$(this).trigger('sdashboardRemove', [widgetId]);
 				});
 
 				//table row click
