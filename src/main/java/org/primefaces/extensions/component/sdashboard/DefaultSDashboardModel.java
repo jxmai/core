@@ -10,9 +10,11 @@ public class DefaultSDashboardModel {
 
     private boolean enableRefresh;
 
+    private String dashboardType;
+
     // Default true
     private boolean enableExpand = true;
-    
+
     private boolean enableAdd = true;
 
     public DefaultSDashboardModel() {
@@ -75,12 +77,20 @@ public class DefaultSDashboardModel {
         this.enableExpand = enableExpand;
     }
 
-	public boolean isEnableAdd() {
-		return enableAdd;
-	}
+    public boolean isEnableAdd() {
+        return enableAdd;
+    }
 
-	public void setEnableAdd(boolean enableAdd) {
-		this.enableAdd = enableAdd;
-	}
+    public void setEnableAdd(boolean enableAdd) {
+        this.enableAdd = enableAdd;
+    }
+
+    public String getDashboardType() {
+        return dashboardType;
+    }
+
+    public void setDashboardType(String dashboardType) {
+        this.dashboardType = dashboardType;
+    }
 
 }

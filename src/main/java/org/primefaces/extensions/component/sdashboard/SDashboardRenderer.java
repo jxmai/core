@@ -59,11 +59,12 @@ public class SDashboardRenderer extends CoreRenderer {
         final String clientId = sDashBoard.getClientId(context);
 
         @SuppressWarnings("unchecked")
-	List<DefaultSDashboardModel> defaultSDashboardModels = (List<DefaultSDashboardModel>) sDashBoard
+        List<DefaultSDashboardModel> defaultSDashboardModels = (List<DefaultSDashboardModel>) sDashBoard
                 .getValue();
-        
-        if(null == defaultSDashboardModels) {
-            throw new FacesException("SDashboard must implement a model. Please provide a valid value attribute!");
+
+        if (null == defaultSDashboardModels) {
+            throw new FacesException(
+                    "SDashboard must implement a model. Please provide a valid value attribute!");
         }
 
         JSONArray jsonArray = new JSONArray();
@@ -76,6 +77,7 @@ public class SDashboardRenderer extends CoreRenderer {
             object.put("widgetContent", currentModel.getWidgetContent());
             object.put("enableExpand", currentModel.isEnableExpand());
             object.put("enableAdd", currentModel.isEnableAdd());
+            object.put("dashboardType", currentModel.getDashboardType());
 
             jsonArray.put(object);
 
@@ -93,9 +95,9 @@ public class SDashboardRenderer extends CoreRenderer {
         if (sDashBoard.getOnRefreshCallBack() != null) {
             wb.callback("refreshCallBack", "function(widgetId)", sDashBoard.getOnRefreshCallBack());
         }
-        
+
         if (sDashBoard.getOnAddCallBack() != null) {
-        	wb.callback("addCallBack", "function(widgetId)", sDashBoard.getOnAddCallBack());
+            wb.callback("addCallBack", "function(widgetId)", sDashBoard.getOnAddCallBack());
         }
 
         // wb.attr("dashboardData", "[" + object.toString() + "]");
