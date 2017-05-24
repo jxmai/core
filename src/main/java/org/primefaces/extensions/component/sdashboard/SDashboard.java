@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.behavior.Behavior;
 import javax.faces.component.behavior.ClientBehaviorHolder;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -15,7 +14,6 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.UIData;
 import org.primefaces.component.api.Widget;
-import org.primefaces.extensions.event.CloseEvent;
 import org.primefaces.extensions.event.SDashboardDeleteEvent;
 import org.primefaces.extensions.event.SDashboardExpandEvent;
 import org.primefaces.extensions.event.SDashboardRefreshEvent;
