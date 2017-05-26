@@ -244,9 +244,11 @@
 
 				var deleteButton = $('<div title="Close" class="sDashboard-icon sDashboard-circle-remove-icon"></div>');
 				
-				var expandButton = $('<a href="#" title="expand"><i class="fa fa-long-arrow-down" aria-hidden="true" style="float:right"></i></a>');
+				var expandButton = $('<a href="#" title="Expand"><i class="fa fa-long-arrow-down" aria-hidden="true" style="float:right"></i></a>');
 				
-				var addButton = $('<a href="#" title="add"><i class="fa fa-plus" aria-hidden="true" style="float:right;padding-right: 9px;"></i></a>');
+				var addButton = $('<a href="#" title="Add"><i class="fa fa-plus" aria-hidden="true" style="float:right;padding-right: 9px;"></i></a>');
+				
+				var editButton = $('<a href="#" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true" style="float:right;padding-right: 9px;"></i></a>');
 
 				//add delete button
 				widgetHeader.append(deleteButton);
@@ -266,6 +268,8 @@
 				if(widgetDefinition.hasOwnProperty("enableAdd") && widgetDefinition.enableAdd) {
 					widgetHeader.append(addButton);
 				}
+				
+				widgetHeader.append(editButton);
 
 				//add widget title
 				widgetHeader.append(widgetDefinition.widgetTitle);
