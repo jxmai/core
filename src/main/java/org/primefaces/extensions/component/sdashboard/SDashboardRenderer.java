@@ -100,6 +100,10 @@ public class SDashboardRenderer extends CoreRenderer {
             wb.callback("addCallBack", "function(widgetId)", sDashBoard.getOnAddCallBack());
         }
 
+        if (sDashBoard.getOnEditCallBack() != null) {
+            wb.callback("editCallBack", "function(widgetId)", sDashBoard.getOnEditCallBack());
+        }
+
         // wb.attr("dashboardData", "[" + object.toString() + "]");
 
         wb.attr("dashboardData", jsonArray.toString());

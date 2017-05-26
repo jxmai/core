@@ -195,6 +195,14 @@
 					
 					widgetDefinition.addCallBack.apply(self, [widgetId]);
 				});
+				
+				this.element.on("click", ".sDashboardWidgetHeader .fa-pencil-square-o", function(e) {
+					var widget = $(e.currentTarget).parents("li:first");
+					var widgetId = widget.attr("id");
+					var widgetDefinition = self._getWidgetContentForId(widgetId, self);
+					
+					widgetDefinition.editCallBack.apply(self, [widgetId]);
+				});
 
 				//delete widget by clicking the 'x' icon on the widget
 				this.element.on("click", ".sDashboardWidgetHeader div.sDashboard-icon.sDashboard-circle-remove-icon ", function(e) {
