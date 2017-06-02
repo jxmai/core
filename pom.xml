@@ -70,6 +70,7 @@
                                 <include>tooltip/**</include>
                                 <include>waypoint/**</include>
                                 <include>sdashboard/**</include>
+                                <include>orgchart/**</include>
                             </includes>
                             <aggregations>
                                 <aggregation>

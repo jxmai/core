@@ -170,6 +170,10 @@
         <component-type>org.primefaces.extensions.component.SDashboard</component-type>
         <component-class>org.primefaces.extensions.component.sdashboard.SDashboard</component-class>
     </component>
+    <component>
+        <component-type>org.primefaces.extensions.component.OrgChart</component-type>
+        <component-class>org.primefaces.extensions.component.orgchart.OrgChart</component-class>
+    </component>
 
     <converter>
         <converter-id>org.primefaces.extensions.converter.JsonConverter</converter-id>
@@ -315,6 +319,11 @@
             <component-family>org.primefaces.extensions.component</component-family>
             <renderer-type>org.primefaces.extensions.component.SDashboardRenderer</renderer-type>
             <renderer-class>org.primefaces.extensions.component.sdashboard.SDashboardRenderer</renderer-class>
+        </renderer>
+        <renderer>
+            <component-family>org.primefaces.extensions.component</component-family>
+            <renderer-type>org.primefaces.extensions.component.OrgChartRenderer</renderer-type>
+            <renderer-class>org.primefaces.extensions.component.orgchart.OrgChartRenderer</renderer-class>
         </renderer>
 
         <client-behavior-renderer>
