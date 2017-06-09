@@ -113,7 +113,7 @@ public class OrgChart extends UIComponentBase implements Widget {
         return (String) getStateHelper().eval(PropertyKeys.exportFilename, "OrgChart");
     }
 
-    public void setExportFileName(final String _exportFilename) {
+    public void setExportFilename(final String _exportFilename) {
         getStateHelper().put(PropertyKeys.exportFilename, _exportFilename);
     }
 
