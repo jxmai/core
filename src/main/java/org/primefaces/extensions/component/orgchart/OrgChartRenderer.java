@@ -48,6 +48,20 @@ public class OrgChartRenderer extends CoreRenderer {
         final String clientId = orgChart.getClientId(context);
 
         wb.initWithDomReady("ExtOrgChart", orgChart.resolveWidgetVar(), clientId);
+        wb.attr("nodeContent", orgChart.getNodeContent());
+        wb.attr("direction", orgChart.getDirection());
+        wb.attr("pan", orgChart.getPan());
+        wb.attr("toggleSiblingsResp", orgChart.getToggleSiblingsResp());
+        wb.attr("depth", orgChart.getDepth());
+        wb.attr("exportButton", orgChart.getExportButton());
+        wb.attr("exportFilename", orgChart.getExportFilename());
+        wb.attr("exportFileextension", orgChart.getExportFileextension());
+        wb.attr("parentNodeSymbol", orgChart.getParentNodeSymbol());
+        wb.attr("draggable", orgChart.getDraggable());
+        wb.attr("chartClass", orgChart.getChartClass());
+        wb.attr("zoom", orgChart.getZoom());
+        wb.attr("zoominLimit", orgChart.getZoominLimit());
+        wb.attr("zoomoutLimit", orgChart.getZoomoutLimit());
         wb.finish();
     }
 

@@ -55,12 +55,10 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
 				'title' : 'department manager'
 			} ]
 		};
+		
+		// hardcode data for now
+		opts['data'] = datascource;
 
-		this.jq.orgchart({
-			'data' : datascource,
-			'nodeContent' : 'title',
-			'pan' : true,
-			'zoom' : true
-		});
+		this.jq.orgchart(opts);
 	}
 });
