@@ -4438,12 +4438,6 @@
         </attribute>
         <attribute>
             <description><![CDATA[Users could pan the orgchart by mouse drag&drop if they enable this option. Default is false]]></description>
-            <name>direction</name>
-            <required>false</required>
-            <type>java.lang.Boolean</type>
-        </attribute>
-        <attribute>
-            <description><![CDATA[Users could pan the orgchart by mouse drag&drop if they enable this option. Default is false]]></description>
             <name>pan</name>
             <required>false</required>
             <type>java.lang.Boolean</type>
