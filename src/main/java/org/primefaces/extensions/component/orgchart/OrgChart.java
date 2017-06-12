@@ -2,7 +2,7 @@ package org.primefaces.extensions.component.orgchart;
 
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
-import javax.faces.component.UIComponentBase;
+import javax.faces.component.UIData;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.util.ComponentUtils;
@@ -15,7 +15,7 @@ import org.primefaces.util.ComponentUtils;
         @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.css")
 })
-public class OrgChart extends UIComponentBase implements Widget {
+public class OrgChart extends UIData implements Widget {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OrgChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
