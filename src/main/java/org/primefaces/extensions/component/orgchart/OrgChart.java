@@ -22,7 +22,7 @@ public class OrgChart extends UIComponentBase implements Widget {
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.orgchart.OrgChartRenderer";
 
     protected enum PropertyKeys {
-        widgetVar, nodeContent, direction, pan, toggleSiblingsResp, depth, exportButton, exportFilename, exportFileextension, parentNodeSymbol, draggable, chartClass, zoom, zoominLimit, zoomoutLimit;
+        widgetVar, nodeContent, direction, pan, toggleSiblingsResp, depth, exportButton, exportFilename, exportFileextension, parentNodeSymbol, draggable, chartClass, zoom, zoominLimit, zoomoutLimit, verticalDepth;
 
         String toString;
 
@@ -171,6 +171,14 @@ public class OrgChart extends UIComponentBase implements Widget {
 
     public void setZoomoutLimit(final Number _zoomoutLimit) {
         getStateHelper().put(PropertyKeys.zoomoutLimit, _zoomoutLimit);
+    }
+
+    public Integer getVerticalDepth() {
+        return (Integer) getStateHelper().eval(PropertyKeys.verticalDepth, null);
+    }
+
+    public void setVerticalDepth(final Integer _verticalDepth) {
+        getStateHelper().put(PropertyKeys.verticalDepth, _verticalDepth);
     }
 
 }

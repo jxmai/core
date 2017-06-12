@@ -62,6 +62,7 @@ public class OrgChartRenderer extends CoreRenderer {
         wb.attr("zoom", orgChart.getZoom());
         wb.attr("zoominLimit", orgChart.getZoominLimit());
         wb.attr("zoomoutLimit", orgChart.getZoomoutLimit());
+        wb.attr("verticalDepth", orgChart.getVerticalDepth());
         wb.finish();
     }
 
