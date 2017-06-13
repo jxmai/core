@@ -52,8 +52,8 @@ public class OrgChartRenderer extends CoreRenderer {
         final String clientId = orgChart.getClientId(context);
 
         OrgChartNode orgChartNode = null;
-        if (null != orgChart) {
-            if (!(orgChart instanceof OrgChartNode)) {
+        if (null != orgChart.getValue()) {
+            if (!(orgChart.getValue() instanceof OrgChartNode)) {
                 throw new FacesException("The value attribute must be OrgChartNode");
             } else {
                 orgChartNode = (OrgChartNode) orgChart.getValue();
@@ -79,6 +79,7 @@ public class OrgChartRenderer extends CoreRenderer {
         wb.attr("zoomoutLimit", orgChart.getZoomoutLimit());
         wb.attr("verticalDepth", orgChart.getVerticalDepth());
         wb.attr("nodeTitle", orgChart.getNodeTitle());
+        wb.attr("data", data);
         wb.finish();
     }
 

@@ -12,7 +12,7 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
 		var opts = $.extend(true, {}, cfg);
 
 		// Hardcode data for now
-		var datascource = {
+		/*var datascource = {
 			'name' : 'Lao Lao',
 			'title' : 'general manager',
 			'children' : [ {
@@ -57,8 +57,9 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
 		};
 		
 		// hardcode data for now
-		opts['data'] = datascource;
+		opts['data'] = datascource;*/
 
+		opts['data'] = JSON.parse(opts['data']);
 		this.jq.orgchart(opts);
 	}
 });
