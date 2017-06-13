@@ -1,11 +1,15 @@
 package org.primefaces.extensions.component.orgchart;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.json.JSONObject;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
 import org.primefaces.util.WidgetBuilder;
@@ -47,6 +51,17 @@ public class OrgChartRenderer extends CoreRenderer {
         final WidgetBuilder wb = getWidgetBuilder(context);
         final String clientId = orgChart.getClientId(context);
 
+        OrgChartNode orgChartNode = null;
+        if (null != orgChart) {
+            if (!(orgChart instanceof OrgChartNode)) {
+                throw new FacesException("The value attribute must be OrgChartNode");
+            } else {
+                orgChartNode = (OrgChartNode) orgChart.getValue();
+            }
+        }
+
+        String data = toJSON(orgChartNode, orgChartNode.getChildren()).toString();
+
         wb.initWithDomReady("ExtOrgChart", orgChart.resolveWidgetVar(), clientId);
         wb.attr("nodeContent", orgChart.getNodeContent());
         wb.attr("direction", orgChart.getDirection());
@@ -65,6 +80,24 @@ public class OrgChartRenderer extends CoreRenderer {
         wb.attr("verticalDepth", orgChart.getVerticalDepth());
         wb.attr("nodeTitle", orgChart.getNodeTitle());
         wb.finish();
+    }
+
+    public JSONObject toJSON(OrgChartNode orgChartNode, List<OrgChartNode> children) {
+
+        JSONObject json = new JSONObject();
+        json.put("name", orgChartNode.getName());
+        json.put("title", orgChartNode.getTitle());
+
+        if (!orgChartNode.getChildren().isEmpty()) {
+            List<JSONObject> jsonChildren = new ArrayList<JSONObject>();
+            for (int i = 0; i < orgChartNode.getChildren().size(); i++) {
+                jsonChildren.add(toJSON(orgChartNode.getChildren().get(i),
+                        orgChartNode.getChildren().get(i).getChildren()));
+            }
+            json.put("children", jsonChildren);
+        }
+
+        return json;
     }
 
 }
