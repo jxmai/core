@@ -1,10 +1,13 @@
-package org.primefaces.extensions.component.orgchart;
+package org.primefaces.extensions.orgchart;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
+import org.primefaces.extensions.component.orgchart.OrgChartNode;
+import org.primefaces.extensions.component.orgchart.OrgChartRenderer;
 
 public class OrgChartRendererTest {
 
