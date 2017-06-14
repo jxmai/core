@@ -25,4 +25,8 @@ public interface OrgChartNode {
     public void clearChildren();
 
     public void clearParent();
+    
+    public String getClassName();
+    
+    public void setClassName(String className);
 }

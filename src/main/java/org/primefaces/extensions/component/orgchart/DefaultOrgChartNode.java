@@ -8,6 +8,8 @@ public class DefaultOrgChartNode implements OrgChartNode {
     private String name;
 
     private String title;
+    
+    private String className;
 
     private List<OrgChartNode> children = new ArrayList<OrgChartNode>();
 
@@ -61,6 +63,14 @@ public class DefaultOrgChartNode implements OrgChartNode {
 
     public void clearParent() {
         this.parent = null;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
 }
