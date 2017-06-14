@@ -14,11 +14,23 @@ public class DefaultOrgChartNode implements OrgChartNode {
     private List<OrgChartNode> children = new ArrayList<OrgChartNode>();
 
     private OrgChartNode parent;
+    
+
+    public DefaultOrgChartNode() {
+	super();
+    }
 
     public DefaultOrgChartNode(String name, String title) {
         super();
         this.name = name;
         this.title = title;
+    }
+    
+    public DefaultOrgChartNode(String name, String title, String className) {
+	super();
+	this.name = name;
+	this.title = title;
+	this.className = className;
     }
 
     public String getName() {
