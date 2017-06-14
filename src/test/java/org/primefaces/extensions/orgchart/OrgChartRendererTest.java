@@ -17,8 +17,14 @@ public class OrgChartRendererTest {
 
     @Before
     public void before() {
-        root.addChild(new DefaultOrgChartNode("children 1", "children 1"));
-        root.addChild(new DefaultOrgChartNode("children 2", "children 2"));
+	OrgChartNode child1 = new DefaultOrgChartNode("children 1", "children 1");
+	OrgChartNode child2 = new DefaultOrgChartNode("children 2", "children 2");
+	
+	child1.setParent(root);
+	child2.setParent(root);
+	
+        root.addChild(child1);
+        root.addChild(child2);
     }
 
     @After
@@ -32,6 +38,12 @@ public class OrgChartRendererTest {
         // not a formal test. Only to print the result to console
         System.out.println(renderer.toJSON(root, root.getChildren()));
 
+    }
+    
+    @Test
+    public void testParent() {
+	
+	assertEquals(root.getChildren().get(0).getParent(), root);
     }
 
 }
