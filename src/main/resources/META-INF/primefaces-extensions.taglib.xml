@@ -4425,6 +4425,12 @@
             <type>java.lang.String</type>
         </attribute>
         <attribute>
+            <description><![CDATA[It sets one property of datasource as unique identifier of every orgchart node. Default is "id"]]></description>
+            <name>nodeId</name>
+            <required>false</required>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[It sets one property of datasource as text content of content section of orgchart node. Default is title]]></description>
             <name>nodeContent</name>
             <required>false</required>

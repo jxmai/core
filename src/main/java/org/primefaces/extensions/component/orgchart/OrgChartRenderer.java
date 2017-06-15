@@ -63,6 +63,7 @@ public class OrgChartRenderer extends CoreRenderer {
         String data = toJSON(orgChartNode, orgChartNode.getChildren()).toString();
 
         wb.initWithDomReady("ExtOrgChart", orgChart.resolveWidgetVar(), clientId);
+        wb.attr("nodeId", orgChart.getNodeId());
         wb.attr("nodeContent", orgChart.getNodeContent());
         wb.attr("direction", orgChart.getDirection());
         wb.attr("pan", orgChart.getPan());
