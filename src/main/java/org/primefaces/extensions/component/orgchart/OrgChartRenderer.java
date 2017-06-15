@@ -23,6 +23,11 @@ public class OrgChartRenderer extends CoreRenderer {
         encodeScript(context, orgChart);
     }
 
+    @Override
+    public void decode(FacesContext context, UIComponent component) {
+        decodeBehaviors(context, component);
+    }
+
     /**
      * 
      * @param context
@@ -81,6 +86,8 @@ public class OrgChartRenderer extends CoreRenderer {
         wb.attr("verticalDepth", orgChart.getVerticalDepth());
         wb.attr("nodeTitle", orgChart.getNodeTitle());
         wb.attr("data", data);
+
+        encodeClientBehaviors(context, orgChart);
         wb.finish();
     }
 

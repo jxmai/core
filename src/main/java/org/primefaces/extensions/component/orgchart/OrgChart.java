@@ -1,11 +1,22 @@
 package org.primefaces.extensions.component.orgchart;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIData;
+import javax.faces.component.behavior.ClientBehaviorHolder;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
+import org.primefaces.extensions.event.OrgChartClickEvent;
 import org.primefaces.util.ComponentUtils;
+import org.primefaces.util.Constants;
 
 @ResourceDependencies({
         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
@@ -15,11 +26,14 @@ import org.primefaces.util.ComponentUtils;
         @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.js"),
         @ResourceDependency(library = "primefaces-extensions", name = "orgchart/orgchart.css")
 })
-public class OrgChart extends UIData implements Widget {
+public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
     public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.OrgChart";
     public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.orgchart.OrgChartRenderer";
+
+    private static final Collection<String> EVENT_NAMES = Collections
+            .unmodifiableCollection(Arrays.asList(OrgChartClickEvent.NAME));
 
     protected enum PropertyKeys {
         nodeId, widgetVar, nodeContent, direction, pan, toggleSiblingsResp, depth, exportButton, exportFilename, exportFileextension, parentNodeSymbol, draggable, chartClass, zoom, zoominLimit, zoomoutLimit, verticalDepth, nodeTitle;
@@ -51,6 +65,53 @@ public class OrgChart extends UIData implements Widget {
     @Override
     public String resolveWidgetVar() {
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
+    }
+
+    @Override
+    public Collection<String> getEventNames() {
+        return EVENT_NAMES;
+    }
+
+    @Override
+    public String getDefaultEventName() {
+        return OrgChartClickEvent.NAME;
+    }
+
+    @Override
+    public void processDecodes(FacesContext fc) {
+        if (isSelfRequest(fc)) {
+            decode(fc);
+        } else {
+            super.processDecodes(fc);
+        }
+    }
+
+    @Override
+    public void queueEvent(FacesEvent event) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+
+        if (isSelfRequest(fc) && event instanceof AjaxBehaviorEvent) {
+            Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+            String eventName = params.get(Constants.RequestParams.PARTIAL_BEHAVIOR_EVENT_PARAM);
+            AjaxBehaviorEvent behaviorEvent = (AjaxBehaviorEvent) event;
+            final String clientId = this.getClientId(fc);
+
+            if (OrgChartClickEvent.NAME.equals(eventName)) {
+
+                String id = params.get(clientId + "_nodeId");
+
+                OrgChartClickEvent orgChartClickEvent = new OrgChartClickEvent(this,
+                        behaviorEvent.getBehavior(), id);
+                orgChartClickEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(orgChartClickEvent);
+            }
+        }
+    }
+
+    private boolean isSelfRequest(final FacesContext context) {
+        return this.getClientId(context)
+                .equals(context.getExternalContext().getRequestParameterMap().get(
+                        Constants.RequestParams.PARTIAL_SOURCE_PARAM));
     }
 
     public String getNodeId() {
