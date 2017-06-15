@@ -3,6 +3,10 @@ package org.primefaces.extensions.component.orgchart;
 import java.util.List;
 
 public interface OrgChartNode {
+    
+    public String getId();
+    
+    public void setId(String id);
 
     String getName();
 

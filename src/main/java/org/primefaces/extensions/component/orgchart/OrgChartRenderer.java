@@ -87,9 +87,14 @@ public class OrgChartRenderer extends CoreRenderer {
     public JSONObject toJSON(OrgChartNode orgChartNode, List<OrgChartNode> children) {
 
         JSONObject json = new JSONObject();
+
+        if (null != orgChartNode.getId() && !orgChartNode.getId().isEmpty()) {
+            json.put("id", orgChartNode.getId());
+        }
+
         json.put("name", orgChartNode.getName());
         json.put("title", orgChartNode.getTitle());
-        if(null != orgChartNode.getClassName() && !orgChartNode.getClassName().isEmpty()) {
+        if (null != orgChartNode.getClassName() && !orgChartNode.getClassName().isEmpty()) {
             json.put("className", orgChartNode.getClassName());
         }
 

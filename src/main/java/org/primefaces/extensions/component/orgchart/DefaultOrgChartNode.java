@@ -5,19 +5,27 @@ import java.util.List;
 
 public class DefaultOrgChartNode implements OrgChartNode {
 
+    private String id;
+
     private String name;
 
     private String title;
-    
+
     private String className;
 
     private List<OrgChartNode> children = new ArrayList<OrgChartNode>();
 
     private OrgChartNode parent;
-    
 
     public DefaultOrgChartNode() {
-	super();
+        super();
+    }
+
+    public DefaultOrgChartNode(String id, String name, String title) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.title = title;
     }
 
     public DefaultOrgChartNode(String name, String title) {
@@ -25,12 +33,13 @@ public class DefaultOrgChartNode implements OrgChartNode {
         this.name = name;
         this.title = title;
     }
-    
-    public DefaultOrgChartNode(String name, String title, String className) {
-	super();
-	this.name = name;
-	this.title = title;
-	this.className = className;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
