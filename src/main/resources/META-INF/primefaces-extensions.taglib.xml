@@ -4491,6 +4491,12 @@
             <type>java.lang.Boolean</type>
         </attribute>
         <attribute>
+            <description><![CDATA[Once enable this option, users can show/hide left/right sibling nodes respectively by clicking left/right arrow. Default is false]]></description>
+            <name>toggleSiblingsResp</name>
+            <required>false</required>
+            <type>java.lang.Boolean</type>
+        </attribute>
+        <attribute>
             <description><![CDATA[Users are allowed to set a zoom-in limit. Default is 7]]></description>
             <name>zoominLimit</name>
             <required>false</required>
