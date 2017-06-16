@@ -13,12 +13,20 @@ public class DefaultOrgChartNode implements OrgChartNode {
 
     private String className;
 
+    private Object nodeData;
+
     private List<OrgChartNode> children = new ArrayList<OrgChartNode>();
 
     private OrgChartNode parent;
 
     public DefaultOrgChartNode() {
         super();
+    }
+
+    public DefaultOrgChartNode(String name, String title) {
+        super();
+        this.name = name;
+        this.title = title;
     }
 
     public DefaultOrgChartNode(String id, String name, String title) {
@@ -28,10 +36,12 @@ public class DefaultOrgChartNode implements OrgChartNode {
         this.title = title;
     }
 
-    public DefaultOrgChartNode(String name, String title) {
+    public DefaultOrgChartNode(String id, String name, String title, Object nodeData) {
         super();
+        this.id = id;
         this.name = name;
         this.title = title;
+        this.nodeData = nodeData;
     }
 
     public String getId() {
@@ -84,6 +94,14 @@ public class DefaultOrgChartNode implements OrgChartNode {
 
     public void clearParent() {
         this.parent = null;
+    }
+
+    public Object getNodeData() {
+        return nodeData;
+    }
+
+    public void setNodeData(Object nodeData) {
+        this.nodeData = nodeData;
     }
 
     public String getClassName() {

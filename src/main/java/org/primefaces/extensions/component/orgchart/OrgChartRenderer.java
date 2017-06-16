@@ -2,13 +2,17 @@ package org.primefaces.extensions.component.orgchart;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.el.ValueExpression;
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 
+import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.HTML;
@@ -25,7 +29,81 @@ public class OrgChartRenderer extends CoreRenderer {
 
     @Override
     public void decode(FacesContext context, UIComponent component) {
+
+        OrgChart orgChart = (OrgChart) component;
+
+        decodeNodeStrucutre(context, orgChart);
         decodeBehaviors(context, component);
+    }
+
+    /**
+     * 
+     * @param context
+     * @param orgChart
+     */
+    private void decodeNodeStrucutre(FacesContext context, OrgChart orgChart) {
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+
+        String hierarchyStr = params.get(orgChart.getClientId() + "_hierarchy");
+
+        if (null != hierarchyStr && !hierarchyStr.isEmpty()) {
+            JSONObject hierarchy = new JSONObject(hierarchyStr);
+
+            ValueExpression ve = orgChart.getValueExpression("value");
+            OrgChartNode root = (OrgChartNode) ve.getValue(context.getELContext());
+
+            List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
+
+            for (OrgChartNode o : orgChartNodes) {
+                o.clearChildren();
+            }
+
+            HashMap<String, OrgChartNode> hashMap = OrgChartHelper
+                    .parseOrgChartNodesIntoHashMap(orgChartNodes);
+
+            root = null;
+
+            root = buildNodesFromJSON(hashMap, hierarchy, null);
+
+            ve.setValue(context.getELContext(), root);
+
+        }
+    }
+
+    // TODO: to fix this method since it is not working as expected. There is some logic flaw but I
+    // am currently tired of debugging this recursive method...
+    /**
+     * 
+     * @param orgChartNodes
+     * @param hierarchy
+     * @param parentNode
+     */
+    private OrgChartNode buildNodesFromJSON(HashMap<String, OrgChartNode> orgChartNodes,
+            JSONObject hierarchy, OrgChartNode parentNode) {
+        String id = (String) hierarchy.get("id");
+        OrgChartNode node = orgChartNodes.get(id);
+
+        if (parentNode == null) {
+            parentNode = node;
+        } else {
+
+            if (hierarchy.has("children")) {
+                JSONArray array = (JSONArray) hierarchy.get("children");
+
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject jsonObject = array.getJSONObject(i);
+                    buildNodesFromJSON(orgChartNodes, jsonObject,
+                            orgChartNodes.get(jsonObject.get("id")));
+
+                    parentNode.addChild(orgChartNodes.get(jsonObject.get("id")));
+
+                }
+            }
+
+        }
+
+        return node;
+
     }
 
     /**
