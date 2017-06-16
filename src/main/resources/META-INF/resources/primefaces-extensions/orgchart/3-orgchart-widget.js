@@ -32,6 +32,9 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
 					params : [ {
 						name : $this.id + '_nodeId',
 						value : $thisNode[0].id
+					}, {
+						name : $this.id + '_hierarchy',
+						value : JSON.stringify($this.jq.orgchart('getHierarchy'))
 					} ]
 
 				};

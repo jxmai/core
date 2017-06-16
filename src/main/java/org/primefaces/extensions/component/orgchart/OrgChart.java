@@ -100,8 +100,10 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
 
                 String id = params.get(clientId + "_nodeId");
 
+                String hierarchyStr = params.get(clientId + "_hierarchy");
+
                 OrgChartClickEvent orgChartClickEvent = new OrgChartClickEvent(this,
-                        behaviorEvent.getBehavior(), id);
+                        behaviorEvent.getBehavior(), id, hierarchyStr);
                 orgChartClickEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(orgChartClickEvent);
             }
