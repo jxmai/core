@@ -78,7 +78,7 @@ public class OrgChartRenderer extends CoreRenderer {
      * @param hierarchy
      * @param parentNode
      */
-    private OrgChartNode buildNodesFromJSON(HashMap<String, OrgChartNode> orgChartNodes,
+    public OrgChartNode buildNodesFromJSON(HashMap<String, OrgChartNode> orgChartNodes,
             JSONObject hierarchy, OrgChartNode parentNode) {
         String id = (String) hierarchy.get("id");
         OrgChartNode node = orgChartNodes.get(id);
