@@ -85,21 +85,19 @@ public class OrgChartRenderer extends CoreRenderer {
 
         if (parentNode == null) {
             parentNode = node;
-        } else {
+        }
 
-            if (hierarchy.has("children")) {
-                JSONArray array = (JSONArray) hierarchy.get("children");
+        if (hierarchy.has("children")) {
+            JSONArray array = (JSONArray) hierarchy.get("children");
 
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject jsonObject = array.getJSONObject(i);
-                    buildNodesFromJSON(orgChartNodes, jsonObject,
-                            orgChartNodes.get(jsonObject.get("id")));
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonObject = array.getJSONObject(i);
+                buildNodesFromJSON(orgChartNodes, jsonObject,
+                        orgChartNodes.get(jsonObject.get("id")));
 
-                    parentNode.addChild(orgChartNodes.get(jsonObject.get("id")));
+                parentNode.addChild(orgChartNodes.get(jsonObject.get("id")));
 
-                }
             }
-
         }
 
         return node;
