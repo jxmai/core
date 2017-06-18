@@ -98,9 +98,8 @@ public class OrgChartHelperTest {
 
     }
 
-    // TODO: to be refactored
     @Test
-    public void test() {
+    public void testBuildNodesFromJSON() {
 
 	OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
 
