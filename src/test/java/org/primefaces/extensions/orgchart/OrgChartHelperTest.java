@@ -1,17 +1,16 @@
 package org.primefaces.extensions.orgchart;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.primefaces.extensions.component.orgchart.DefaultOrgChartNode;
-import org.primefaces.extensions.component.orgchart.OrgChart;
 import org.primefaces.extensions.component.orgchart.OrgChartHelper;
 import org.primefaces.extensions.component.orgchart.OrgChartNode;
 import org.primefaces.extensions.component.orgchart.OrgChartRenderer;
@@ -47,12 +46,11 @@ public class OrgChartHelperTest {
 
 	List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
 
-	assertEquals(orgChartNodes.contains(child1), true);
-	assertEquals(orgChartNodes.contains(child2), true);
-	assertEquals(orgChartNodes.contains(child3), false);
-	assertEquals(orgChartNodes.contains(root), true);
-
-	assertEquals(orgChartNodes.size(), 3);
+	assertEquals(true, orgChartNodes.contains(child1));
+	assertEquals(true, orgChartNodes.contains(child2));
+	assertEquals(false, orgChartNodes.contains(child3));
+	assertEquals(true, orgChartNodes.contains(root));
+	assertEquals(3, orgChartNodes.size());
     }
 
     @Test
@@ -72,14 +70,12 @@ public class OrgChartHelperTest {
 	child1.addChild(grandChild1);
 
 	List<OrgChartNode> orgChartNodes = OrgChartHelper.getAllNodesTraverseFromRoot(root);
-
-	assertEquals(orgChartNodes.contains(child1), true);
-	assertEquals(orgChartNodes.contains(child2), true);
-	assertEquals(orgChartNodes.contains(child3), false);
-	assertEquals(orgChartNodes.contains(root), true);
-	assertEquals(orgChartNodes.contains(grandChild1), true);
-
-	assertEquals(orgChartNodes.size(), 4);
+	assertEquals(true, orgChartNodes.contains(child1));
+	assertEquals(true, orgChartNodes.contains(child2));
+	assertEquals(false, orgChartNodes.contains(child3));
+	assertEquals(true, orgChartNodes.contains(root));
+	assertEquals(true, orgChartNodes.contains(grandChild1));
+	assertEquals(4, orgChartNodes.size());
     }
 
     @Test
@@ -94,15 +90,15 @@ public class OrgChartHelperTest {
 
 	HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
-	assertEquals(hashMap.get("id1"), node1);
-	assertEquals(hashMap.get("id2"), node2);
-	assertEquals(hashMap.get("id3"), node3);
-	assertNotSame(hashMap.get("id3"), node2);
-	assertEquals(hashMap.size(), 3);
+	assertEquals(node1, hashMap.get("id1"));
+	assertEquals(node2, hashMap.get("id2"));
+	assertEquals(node3, hashMap.get("id3"));
+	assertNotSame(node2, hashMap.get("id3"));
+	assertEquals(3, hashMap.size());
 
     }
 
-    //TODO: to be refactored
+    // TODO: to be refactored
     @Test
     public void test() {
 
@@ -113,7 +109,7 @@ public class OrgChartHelperTest {
 	OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
 	orgChartNodes.add(orgChartNode);
 	orgChartNodes.add(orgChartNode2);
-	
+
 	HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
 
 	JSONObject jsonObject = new JSONObject();
@@ -123,12 +119,12 @@ public class OrgChartHelperTest {
 	jsonObject2.put("id", "id2");
 	jsonArray.put(jsonObject2);
 	jsonObject.put("children", jsonArray);
-//	System.out.println(jsonObject.toString());
-	
-	OrgChartNode chartNode =  orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
-	
+	// System.out.println(jsonObject.toString());
+
+	OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+
 	assertEquals("id1", chartNode.getId());
 	assertEquals(1, chartNode.getChildren().size());
-	
+
     }
 }
