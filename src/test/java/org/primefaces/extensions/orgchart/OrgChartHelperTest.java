@@ -125,4 +125,38 @@ public class OrgChartHelperTest {
 	assertEquals(1, chartNode.getChildren().size());
 
     }
+
+    @Test
+    public void testBuildNodesFromJSON_2() {
+
+	OrgChartRenderer orgChartRenderer = new OrgChartRenderer();
+
+	List<OrgChartNode> orgChartNodes = new ArrayList<OrgChartNode>();
+	OrgChartNode orgChartNode = new DefaultOrgChartNode("id1", "name1", "title1");
+	OrgChartNode orgChartNode2 = new DefaultOrgChartNode("id2", "name2", "title2");
+	OrgChartNode orgChartNode3 = new DefaultOrgChartNode("id3", "name3", "title3");
+	orgChartNodes.add(orgChartNode);
+	orgChartNodes.add(orgChartNode2);
+	orgChartNodes.add(orgChartNode3);
+
+	HashMap<String, OrgChartNode> hashMap = OrgChartHelper.parseOrgChartNodesIntoHashMap(orgChartNodes);
+
+	JSONObject jsonObject = new JSONObject();
+	jsonObject.put("id", "id1");
+	JSONArray jsonArray = new JSONArray();
+	JSONObject jsonObject2 = new JSONObject();
+	JSONObject jsonObject3 = new JSONObject();
+	jsonObject2.put("id", "id2");
+	jsonObject3.put("id", "id3");
+	jsonArray.put(jsonObject2);
+	jsonArray.put(jsonObject3);
+	jsonObject.put("children", jsonArray);
+
+	OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
+
+	assertEquals("id1", chartNode.getId());
+	assertEquals(2, chartNode.getChildren().size());
+	assertEquals("id2", chartNode.getChildren().get(0).getId());
+	assertEquals("id3", chartNode.getChildren().get(1).getId());
+    }
 }
