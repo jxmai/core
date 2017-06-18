@@ -70,8 +70,6 @@ public class OrgChartRenderer extends CoreRenderer {
         }
     }
 
-    // TODO: to fix this method since it is not working as expected. There is some logic flaw but I
-    // am currently tired of debugging this recursive method...
     /**
      * 
      * @param orgChartNodes

@@ -119,7 +119,6 @@ public class OrgChartHelperTest {
 	jsonObject2.put("id", "id2");
 	jsonArray.put(jsonObject2);
 	jsonObject.put("children", jsonArray);
-	// System.out.println(jsonObject.toString());
 
 	OrgChartNode chartNode = orgChartRenderer.buildNodesFromJSON(hashMap, jsonObject, null);
 
