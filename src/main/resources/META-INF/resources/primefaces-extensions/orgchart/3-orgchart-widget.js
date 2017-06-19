@@ -43,10 +43,29 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
 		});
 		
 		this.jq.children('.orgchart').on('nodedropped.orgchart', function(event) {
-			console.log('draggedNode:' + event.draggedNode.children('.title').text()
-			        + ', dragZone:' + event.dragZone.children('.title').text()
-			        + ', dropZone:' + event.dropZone.children('.title').text()
-			      );
+//			console.log('draggedNode:' + event.draggedNode.children('.title').text()
+//			        + ', dragZone:' + event.dragZone.children('.title').text()
+//			        + ', dropZone:' + event.dropZone.children('.title').text()
+//			      );
+			var behavior = $this.cfg.behaviors ? $this.cfg.behaviors['drop'] : null;
+			
+			if (behavior) {
+				var options = {
+					params : [ {
+						name : $this.id + '_draggedNodeId',
+						value : event.draggedNode['context']['id']
+					}, {
+						name : $this.id + '_droppedZoneId',
+						value : event.dropZone['context']['id']
+					}, {
+						name : $this.id + '_hierarchy',
+						value : JSON.stringify($this.jq.orgchart('getHierarchy'))
+					} ]
+
+				};
+				behavior.call($this, options);
+			}
+			
 		});
 	}
 });

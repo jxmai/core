@@ -15,6 +15,7 @@ import javax.faces.event.FacesEvent;
 
 import org.primefaces.component.api.Widget;
 import org.primefaces.extensions.event.OrgChartClickEvent;
+import org.primefaces.extensions.event.OrgChartDropEvent;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
@@ -33,7 +34,7 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
     private static final String DEFAULT_RENDERER = "org.primefaces.extensions.component.orgchart.OrgChartRenderer";
 
     private static final Collection<String> EVENT_NAMES = Collections
-            .unmodifiableCollection(Arrays.asList(OrgChartClickEvent.NAME));
+            .unmodifiableCollection(Arrays.asList(OrgChartClickEvent.NAME, OrgChartDropEvent.NAME));
 
     protected enum PropertyKeys {
         nodeId, widgetVar, nodeContent, direction, pan, toggleSiblingsResp, depth, exportButton, exportFilename, exportFileextension, parentNodeSymbol, draggable, chartClass, zoom, zoominLimit, zoomoutLimit, verticalDepth, nodeTitle;
@@ -106,6 +107,17 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
                         behaviorEvent.getBehavior(), id, hierarchyStr);
                 orgChartClickEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(orgChartClickEvent);
+            } else if (OrgChartDropEvent.NAME.equals(eventName)) {
+                String hierarchyStr = params.get(clientId + "_hierarchy");
+
+                String draggedNodeId = params.get(clientId + "_draggedNodeId");
+
+                String droppedZoneId = params.get(clientId + "_droppedZoneId");
+
+                OrgChartDropEvent orgChartDropEvent = new OrgChartDropEvent(this,
+                        behaviorEvent.getBehavior(), hierarchyStr, draggedNodeId, droppedZoneId);
+                orgChartDropEvent.setPhaseId(event.getPhaseId());
+                super.queueEvent(orgChartDropEvent);
             }
         }
     }
