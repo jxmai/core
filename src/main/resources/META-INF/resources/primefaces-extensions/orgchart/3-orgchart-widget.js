@@ -41,5 +41,12 @@ PrimeFaces.widget.ExtOrgChart = PrimeFaces.widget.BaseWidget.extend({
 				behavior.call($this, options);
 			}
 		});
+		
+		this.jq.children('.orgchart').on('nodedropped.orgchart', function(event) {
+			console.log('draggedNode:' + event.draggedNode.children('.title').text()
+			        + ', dragZone:' + event.dragZone.children('.title').text()
+			        + ', dropZone:' + event.dropZone.children('.title').text()
+			      );
+		});
 	}
 });
