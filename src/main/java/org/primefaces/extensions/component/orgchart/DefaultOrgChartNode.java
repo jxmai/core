@@ -17,6 +17,8 @@ public class DefaultOrgChartNode implements OrgChartNode {
 
     private List<OrgChartNode> children = new ArrayList<OrgChartNode>();
 
+    private int childCount;
+
     private OrgChartNode parent;
 
     public DefaultOrgChartNode() {
@@ -110,6 +112,11 @@ public class DefaultOrgChartNode implements OrgChartNode {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public int getChildCount() {
+        childCount = this.getChildren().size();
+        return childCount;
     }
 
 }

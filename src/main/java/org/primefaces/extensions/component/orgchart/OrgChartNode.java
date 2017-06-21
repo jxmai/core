@@ -3,9 +3,9 @@ package org.primefaces.extensions.component.orgchart;
 import java.util.List;
 
 public interface OrgChartNode {
-    
+
     public String getId();
-    
+
     public void setId(String id);
 
     String getName();
@@ -29,8 +29,11 @@ public interface OrgChartNode {
     public void clearChildren();
 
     public void clearParent();
-    
+
     public String getClassName();
-    
+
     public void setClassName(String className);
+
+    public int getChildCount();
+
 }
