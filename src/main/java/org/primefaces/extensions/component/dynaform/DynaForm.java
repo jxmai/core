@@ -27,6 +27,7 @@ import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.ContextCallback;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UINamingContainer;
 import javax.faces.component.visit.VisitCallback;
 import javax.faces.component.visit.VisitContext;
 import javax.faces.context.FacesContext;
@@ -257,18 +258,40 @@ public class DynaForm extends AbstractDynamicData implements Widget {
 			throw new FacesException("Value in DynaForm must be of type DynaFormModel");
 		}
 
-		List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
-		for (DynaFormControl dynaFormControl : dynaFormControls) {
-			setData(dynaFormControl);
+                if (this.getChildCount() > 0) {
+                    // extract the dynaFormControl key from the clientId
+                    // it's simliar to rowKey in UIData
+                    String key = clientId.substring(getClientId().length() + 1);
+                    key = key.substring(0, key.indexOf(UINamingContainer.getSeparatorChar(context)));
 
-			if (super.invokeOnComponent(context, clientId, callback)) {
-				return true;
-			}
-		}
+                    List<DynaFormControl> dynaFormControls = ((DynaFormModel) value).getControls();
+                    for (DynaFormControl dynaFormControl : dynaFormControls) {
+                        
+                        // determine associated DynaFormControl
+                        if (dynaFormControl.getKey().equals(key)) {
 
-		resetData();
+                            // get UI control for DynaFormControl
+                            UIDynaFormControl uiDynaFormControl = getControlCell(dynaFormControl.getType());
 
-		return false;
+                            try {
+                                // push the associated data before visiting the child components
+                                setData(dynaFormControl);
+
+                                // visit childs
+                                if (uiDynaFormControl.invokeOnComponent(context, clientId, callback)) {
+                                    return true;
+                                }
+                            }
+                            finally {
+                                resetData();
+                            }
+
+                            break;
+                        }
+                    }
+                }
+
+                return false;
 	}
 
 	private void processDynaFormCells(final FacesContext context, final PhaseId phaseId, final DynaFormControl dynaFormControl) {
