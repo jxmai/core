@@ -7,6 +7,7 @@ import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
+import javax.swing.border.TitledBorder;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
@@ -71,7 +72,17 @@ public class SDashboardRenderer extends CoreRenderer {
         for (int i = 0; i < defaultSDashboardModels.size(); i++) {
             DefaultSDashboardModel currentModel = defaultSDashboardModels.get(i);
             JSONObject object = new JSONObject();
-            object.put("widgetTitle", currentModel.getWidgetTitle());
+
+            // TODO: move it to a different function / module
+            String widgetTitleToDisplay = "";
+            if (null != currentModel.getWidgetTitle()
+                    && currentModel.getWidgetTitle().length() > 30) {
+                widgetTitleToDisplay = currentModel.getWidgetTitle().substring(0, 30).concat("...");
+            } else {
+                widgetTitleToDisplay = currentModel.getWidgetTitle();
+            }
+
+            object.put("widgetTitle", widgetTitleToDisplay);
             object.put("widgetId", currentModel.getWidgetId());
             object.put("enableRefresh", currentModel.isEnableRefresh());
             object.put("widgetContent", currentModel.getWidgetContent());
