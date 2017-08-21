@@ -7,7 +7,6 @@ import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
-import javax.swing.border.TitledBorder;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
