@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.component.masterdetail;
 
 import javax.faces.component.UIComponent;
@@ -25,40 +22,40 @@ import javax.faces.event.FacesListener;
 /**
  * Event class for master-detail navigation.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class SelectLevelEvent extends FacesEvent {
 
-	private int currentLevel;
-	private int newLevel;
+    private int currentLevel;
+    private int newLevel;
 
-	public SelectLevelEvent(UIComponent component, int currentLevel, int newLevel) {
-		super(component);
-		this.currentLevel = currentLevel;
-		this.newLevel = newLevel;
-	}
+    public SelectLevelEvent(UIComponent component, int currentLevel, int newLevel) {
+        super(component);
+        this.currentLevel = currentLevel;
+        this.newLevel = newLevel;
+    }
 
-	@Override
-	public boolean isAppropriateListener(FacesListener listener) {
-		return false;
-	}
+    @Override
+    public boolean isAppropriateListener(FacesListener listener) {
+        return false;
+    }
 
-	@Override
-	public void processListener(FacesListener listener) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void processListener(FacesListener listener) {
+        throw new UnsupportedOperationException();
+    }
 
-	public int getCurrentLevel() {
-		return currentLevel;
-	}
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 
-	public int getNewLevel() {
-		return newLevel;
-	}
+    public int getNewLevel() {
+        return newLevel;
+    }
 
-	public boolean isEntered(int level) {
-		return newLevel == level && currentLevel != level;
-	}
+    public boolean isEntered(int level) {
+        return newLevel == level && currentLevel != level;
+    }
 }

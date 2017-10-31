@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.model.dynaform;
 
 import java.io.Serializable;
@@ -154,7 +151,8 @@ public class DynaFormModel implements Serializable {
         for (AbstractDynaFormElement element : rowToBeRemoved.getElements()) {
             if (element instanceof DynaFormControl) {
                 controlsToBeRemoved.add((DynaFormControl) element);
-            } else if (element instanceof DynaFormLabel) {
+            }
+            else if (element instanceof DynaFormLabel) {
                 labelsToBeRemoved.add((DynaFormLabel) element);
             }
         }
@@ -179,10 +177,10 @@ public class DynaFormModel implements Serializable {
             for (AbstractDynaFormElement element : dynaFormRow.getElements()) {
                 element.setRow(row);
                 if (element instanceof DynaFormControl) {
-                     DynaFormControl control = ((DynaFormControl) element);
-                     int delta = rowToBeRemoved.getElements().size();
-                     control.setPosition(control.getPosition() - delta);
-                     control.generateKey();
+                    DynaFormControl control = ((DynaFormControl) element);
+                    int delta = rowToBeRemoved.getElements().size();
+                    control.setPosition(control.getPosition() - delta);
+                    control.generateKey();
                 }
             }
         }

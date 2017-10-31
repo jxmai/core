@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.util.json;
 
 import java.lang.reflect.Type;
@@ -32,17 +29,17 @@ import com.google.gson.JsonSerializer;
 /**
  * Gson Serializer / Deserializer for {@link Date}.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.6.2
+ * @since 0.6.2
  */
 public class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
-	public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
-		return new JsonPrimitive(src.getTime());
-	}
+    public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+        return new JsonPrimitive(src.getTime());
+    }
 
-	public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-		return new Date(json.getAsJsonPrimitive().getAsLong());
-	}
+    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        return new Date(json.getAsJsonPrimitive().getAsLong());
+    }
 }

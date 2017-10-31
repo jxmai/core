@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,17 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.component.remotecommand;
 
-import org.primefaces.component.api.AjaxSource;
-import org.primefaces.extensions.component.base.AbstractParameter;
-import org.primefaces.extensions.component.parameters.AssignableParameter;
-import org.primefaces.extensions.util.ExtAjaxRequestBuilder;
-import org.primefaces.renderkit.CoreRenderer;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.el.ELContext;
 import javax.el.ValueExpression;
@@ -33,9 +28,12 @@ import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+
+import org.primefaces.component.api.AjaxSource;
+import org.primefaces.extensions.component.base.AbstractParameter;
+import org.primefaces.extensions.component.parameters.AssignableParameter;
+import org.primefaces.extensions.util.ExtAjaxRequestBuilder;
+import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.ComponentTraversalUtils;
 
 /**
@@ -58,11 +56,12 @@ public class RemoteCommandRenderer extends CoreRenderer {
             final ActionEvent event = new ActionEvent(command);
             if (command.isImmediate()) {
                 event.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
-            } else {
+            }
+            else {
                 event.setPhaseId(PhaseId.INVOKE_APPLICATION);
             }
 
-            //apply params
+            // apply params
             final ELContext elContext = context.getELContext();
 
             for (final AssignableParameter param : command.getAssignableParameters()) {
@@ -77,7 +76,8 @@ public class RemoteCommandRenderer extends CoreRenderer {
                 if (converter != null) {
                     final Object convertedValue = converter.getAsObject(context, param, paramValue);
                     valueExpression.setValue(elContext, convertedValue);
-                } else {
+                }
+                else {
                     valueExpression.setValue(elContext, paramValue);
                 }
             }
@@ -92,7 +92,7 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
         if (form == null) {
             throw new FacesException("Component " + component.getClientId(context)
-                    + " must be enclosed in a form.");
+                        + " must be enclosed in a form.");
         }
 
         final ResponseWriter writer = context.getResponseWriter();
@@ -105,34 +105,34 @@ public class RemoteCommandRenderer extends CoreRenderer {
 
         ExtAjaxRequestBuilder builder = ExtAjaxRequestBuilder.get(context);
         builder.init()
-                .source(clientId)
-                .form(form.getClientId(context))
-                .process(component, source.getProcess())
-                .update(component, source.getUpdate())
-                .async(source.isAsync())
-                .global(source.isGlobal())
-                .partialSubmit(source.isPartialSubmit(), command.isPartialSubmitSet(), command.getPartialSubmitFilter())
-                .resetValues(source.isResetValues(), source.isResetValuesSet())
-                .ignoreAutoUpdate(source.isIgnoreAutoUpdate())
-                .onstart(source.getOnstart())
-                .onerror(source.getOnerror())
-                .onsuccess(source.getOnsuccess())
-                .oncomplete(source.getOncomplete())
-                .delay(source.getDelay())
-                .timeout(source.getTimeout());
+                    .source(clientId)
+                    .form(form.getClientId(context))
+                    .process(component, source.getProcess())
+                    .update(component, source.getUpdate())
+                    .async(source.isAsync())
+                    .global(source.isGlobal())
+                    .partialSubmit(source.isPartialSubmit(), command.isPartialSubmitSet(), command.getPartialSubmitFilter())
+                    .resetValues(source.isResetValues(), source.isResetValuesSet())
+                    .ignoreAutoUpdate(source.isIgnoreAutoUpdate())
+                    .onstart(source.getOnstart())
+                    .onerror(source.getOnerror())
+                    .onsuccess(source.getOnsuccess())
+                    .oncomplete(source.getOncomplete())
+                    .delay(source.getDelay())
+                    .timeout(source.getTimeout());
 
         builder.params(clientId, parameters);
 
         final String request = builder.build();
 
-        //script
+        // script
         writer.startElement("script", command);
         writer.writeAttribute("type", "text/javascript", null);
         writer.writeAttribute("id", command.getClientId(), null);
 
         writer.write(name + " = function(");
 
-        //parameters
+        // parameters
         for (int i = 0; i < parameters.size(); i++) {
             if (i != 0) {
                 writer.write(",");

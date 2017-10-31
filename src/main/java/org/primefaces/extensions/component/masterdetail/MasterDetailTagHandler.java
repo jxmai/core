@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.component.masterdetail;
 
 import javax.faces.component.UIComponent;
@@ -31,56 +28,54 @@ import org.primefaces.model.menu.DefaultMenuModel;
 /**
  * {@link ComponentHandler} for the <code>MasterDetail</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class MasterDetailTagHandler extends ComponentHandler {
 
-	private static final MethodRule SELECT_LEVEL_LISTENER =
-	    new MethodRule("selectLevelListener", int.class, new Class[] {SelectLevelEvent.class});
+    private static final MethodRule SELECT_LEVEL_LISTENER = new MethodRule("selectLevelListener", int.class, new Class[] { SelectLevelEvent.class });
 
-	public MasterDetailTagHandler(final ComponentConfig config) {
-		super(config);
-	}
+    public MasterDetailTagHandler(final ComponentConfig config) {
+        super(config);
+    }
 
-	@Override
-	protected MetaRuleset createMetaRuleset(Class type) {
-		MetaRuleset metaRuleset = super.createMetaRuleset(type);
-		metaRuleset.addRule(SELECT_LEVEL_LISTENER);
+    @Override
+    protected MetaRuleset createMetaRuleset(Class type) {
+        MetaRuleset metaRuleset = super.createMetaRuleset(type);
+        metaRuleset.addRule(SELECT_LEVEL_LISTENER);
 
-		return metaRuleset;
-	}
+        return metaRuleset;
+    }
 
-	@Override
-	public void onComponentPopulated(FaceletContext ctx, UIComponent c, UIComponent parent) {
-		if (!isNew(parent)) {
-			return;
-		}
+    @Override
+    public void onComponentPopulated(FaceletContext ctx, UIComponent c, UIComponent parent) {
+        if (!isNew(parent)) {
+            return;
+        }
 
-		MasterDetail masterDetail = (MasterDetail) c;
+        MasterDetail masterDetail = (MasterDetail) c;
 
-		if (!isBreadcrumbAvailable(masterDetail)) {
-			// create BreadCrumb programmatically
-			BreadCrumb breadcrumb =
-			    (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
-			breadcrumb.setId(masterDetail.getId() + MasterDetail.BREADCRUMB_ID_PREFIX);
+        if (!isBreadcrumbAvailable(masterDetail)) {
+            // create BreadCrumb programmatically
+            BreadCrumb breadcrumb = (BreadCrumb) ctx.getFacesContext().getApplication().createComponent(BreadCrumb.COMPONENT_TYPE);
+            breadcrumb.setId(masterDetail.getId() + MasterDetail.BREADCRUMB_ID_PREFIX);
 
-			// set empty model
-			breadcrumb.setModel(new DefaultMenuModel());
+            // set empty model
+            breadcrumb.setModel(new DefaultMenuModel());
 
-			// add it to the MasterDetail
-			masterDetail.getChildren().add(breadcrumb);
-		}
-	}
+            // add it to the MasterDetail
+            masterDetail.getChildren().add(breadcrumb);
+        }
+    }
 
-	private static boolean isBreadcrumbAvailable(MasterDetail masterDetail) {
-		for (UIComponent child : masterDetail.getChildren()) {
-			if (child instanceof BreadCrumb) {
-				return true;
-			}
-		}
+    private static boolean isBreadcrumbAvailable(MasterDetail masterDetail) {
+        for (UIComponent child : masterDetail.getChildren()) {
+            if (child instanceof BreadCrumb) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

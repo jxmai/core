@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id: $
  */
-
 package org.primefaces.extensions.component.switchcase;
 
 import javax.faces.component.UINamingContainer;
@@ -29,57 +26,56 @@ import javax.faces.component.UINamingContainer;
  */
 public class DefaultCase extends UINamingContainer {
 
-	public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DefaultCase";
-	public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
+    public static final String COMPONENT_TYPE = "org.primefaces.extensions.component.DefaultCase";
+    public static final String COMPONENT_FAMILY = "org.primefaces.extensions.component";
 
-	/**
-	 * Properties that are tracked by state saving.
-	 *
-	 * @author Michael Gmeiner / last modified by $Author: $
-	 * @version $Revision: $
-	 */
-	protected enum PropertyKeys {
-		
-		style,
-		styleClass;
+    /**
+     * Properties that are tracked by state saving.
+     *
+     * @author Michael Gmeiner / last modified by $Author: $
+     * @version $Revision: $
+     */
+    protected enum PropertyKeys {
 
-		private String toString;
+        style, styleClass;
 
-		PropertyKeys(final String toString) {
-			this.toString = toString;
-		}
+        private String toString;
 
-		PropertyKeys() {
-		}
+        PropertyKeys(final String toString) {
+            this.toString = toString;
+        }
 
-		@Override
-		public String toString() {
-			return ((this.toString != null) ? this.toString : super.toString());
-		}
-	}
-	
-	public DefaultCase() {
-		setRendererType(null);
-	}
+        PropertyKeys() {
+        }
 
-	@Override
-	public String getFamily() {
-		return COMPONENT_FAMILY;
-	}
-	
-	public String getStyle() {
-		return (String) getStateHelper().eval(PropertyKeys.style, null);
-	}
+        @Override
+        public String toString() {
+            return ((this.toString != null) ? this.toString : super.toString());
+        }
+    }
 
-	public void setStyle(final String style) {
-		getStateHelper().put(PropertyKeys.style, style);
-	}
-	
-	public String getStyleClass() {
-		return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
-	}
+    public DefaultCase() {
+        setRendererType(null);
+    }
 
-	public void setStyleClass(final String styleClass) {
-		getStateHelper().put(PropertyKeys.styleClass, styleClass);
-	}
+    @Override
+    public String getFamily() {
+        return COMPONENT_FAMILY;
+    }
+
+    public String getStyle() {
+        return (String) getStateHelper().eval(PropertyKeys.style, null);
+    }
+
+    public void setStyle(final String style) {
+        getStateHelper().put(PropertyKeys.style, style);
+    }
+
+    public String getStyleClass() {
+        return (String) getStateHelper().eval(PropertyKeys.styleClass, null);
+    }
+
+    public void setStyleClass(final String styleClass) {
+        getStateHelper().put(PropertyKeys.styleClass, styleClass);
+    }
 }

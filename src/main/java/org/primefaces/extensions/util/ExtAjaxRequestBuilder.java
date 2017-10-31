@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.util;
 
 import java.util.List;
@@ -33,49 +30,50 @@ import org.primefaces.extensions.component.base.AbstractParameter;
  */
 public class ExtAjaxRequestBuilder extends org.primefaces.util.AjaxRequestBuilder {
 
-	private static final String KEY = ExtAjaxRequestBuilder.class.getName();
+    private static final String KEY = ExtAjaxRequestBuilder.class.getName();
 
-	public static ExtAjaxRequestBuilder get(final FacesContext context) {
+    public ExtAjaxRequestBuilder(FacesContext context) {
+        super(context);
+    }
 
-		ExtAjaxRequestBuilder arb = (ExtAjaxRequestBuilder) context.getExternalContext().getRequestMap().get(KEY);
+    public static ExtAjaxRequestBuilder get(final FacesContext context) {
 
-		if (arb == null) {
-			arb = new ExtAjaxRequestBuilder(context);
+        ExtAjaxRequestBuilder arb = (ExtAjaxRequestBuilder) context.getExternalContext().getRequestMap().get(KEY);
 
-			context.getExternalContext().getRequestMap().put(KEY, arb);
-		}
+        if (arb == null) {
+            arb = new ExtAjaxRequestBuilder(context);
 
-		return arb;
-	}
-    
-	public ExtAjaxRequestBuilder(FacesContext context) {
-		super(context);
-	}
+            context.getExternalContext().getRequestMap().put(KEY, arb);
+        }
 
-	public ExtAjaxRequestBuilder params(final String clientId, final List<AbstractParameter> parameters) {
-		boolean paramWritten = false;
+        return arb;
+    }
 
-		for (int i = 0; i < parameters.size(); i++) {
-			final AbstractParameter param = parameters.get(i);
+    public ExtAjaxRequestBuilder params(final String clientId, final List<AbstractParameter> parameters) {
+        boolean paramWritten = false;
 
-			if (paramWritten) {
-				buffer.append(",");
-			} else {
-				paramWritten = true;
-				buffer.append(",params:[");
-			}
+        for (int i = 0; i < parameters.size(); i++) {
+            final AbstractParameter param = parameters.get(i);
 
-			buffer.append("{name:'");
-			buffer.append(clientId).append('_').append(param.getName());
-			buffer.append("',value:");
-			buffer.append(param.getName());
-			buffer.append("}");
-		}
+            if (paramWritten) {
+                buffer.append(",");
+            }
+            else {
+                paramWritten = true;
+                buffer.append(",params:[");
+            }
 
-		if (paramWritten) {
-			buffer.append("]");
-		}
+            buffer.append("{name:'");
+            buffer.append(clientId).append('_').append(param.getName());
+            buffer.append("',value:");
+            buffer.append(param.getName());
+            buffer.append("}");
+        }
 
-		return this;
-	}
+        if (paramWritten) {
+            buffer.append("]");
+        }
+
+        return this;
+    }
 }

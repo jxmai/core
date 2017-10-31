@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.util.json;
 
 import java.util.Date;
@@ -26,26 +23,26 @@ import com.google.gson.GsonBuilder;
 /**
  * Singleton instance of Gson which exludes fields without @Expose annotation.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   1.1.0
+ * @since 1.1.0
  */
 public final class GsonExposeAwareConverter {
 
-	private static final GsonExposeAwareConverter INSTANCE = new GsonExposeAwareConverter();
-	private Gson gson;
+    private static final GsonExposeAwareConverter INSTANCE = new GsonExposeAwareConverter();
+    private Gson gson;
 
-	private GsonExposeAwareConverter() {
-		GsonBuilder gsonBilder = new GsonBuilder();
+    private GsonExposeAwareConverter() {
+        GsonBuilder gsonBilder = new GsonBuilder();
 
-		gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
-		gsonBilder.serializeNulls();
-		gsonBilder.excludeFieldsWithoutExposeAnnotation();
+        gsonBilder.registerTypeAdapter(Date.class, new DateTypeAdapter());
+        gsonBilder.serializeNulls();
+        gsonBilder.excludeFieldsWithoutExposeAnnotation();
 
-		gson = gsonBilder.create();
-	}
+        gson = gsonBilder.create();
+    }
 
-	public static Gson getGson() {
-		return INSTANCE.gson;
-	}
+    public static Gson getGson() {
+        return INSTANCE.gson;
+    }
 }

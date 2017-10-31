@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.component.masterdetail;
 
 import javax.faces.view.facelets.ComponentConfig;
@@ -25,17 +22,17 @@ import javax.faces.view.facelets.TagAttribute;
 /**
  * {@link ComponentHandler} for the <code>MasterDetailLevel</code>.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class MasterDetailLevelTagHandler extends ComponentHandler {
 
-	@SuppressWarnings("unused") //check required attribute
-	private final TagAttribute level;
+    @SuppressWarnings("unused") // check required attribute
+    private final TagAttribute level;
 
-	public MasterDetailLevelTagHandler(final ComponentConfig config) {
-		super(config);
-		this.level = getRequiredAttribute("level");
-	}
+    public MasterDetailLevelTagHandler(final ComponentConfig config) {
+        super(config);
+        this.level = getRequiredAttribute("level");
+    }
 }

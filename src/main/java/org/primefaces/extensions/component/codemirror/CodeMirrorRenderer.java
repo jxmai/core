@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.component.codemirror;
 
@@ -26,8 +24,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.ResponseWriter;
 import javax.faces.convert.Converter;
 import javax.faces.event.PhaseId;
-import org.primefaces.context.RequestContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.extensions.event.CompleteEvent;
 import org.primefaces.renderkit.InputRenderer;
@@ -70,7 +68,7 @@ public class CodeMirrorRenderer extends InputRenderer {
             final int column = Integer.parseInt(params.get(clientId + "_column"));
 
             final CompleteEvent autoCompleteEvent = new CompleteEvent(
-                    codeMirror, token, context, line, column);
+                        codeMirror, token, context, line, column);
             autoCompleteEvent.setPhaseId(PhaseId.APPLY_REQUEST_VALUES);
             codeMirror.queueEvent(autoCompleteEvent);
         }
@@ -85,7 +83,8 @@ public class CodeMirrorRenderer extends InputRenderer {
 
         if (token != null) {
             encodeSuggestions(context, codeMirror, codeMirror.getSuggestions());
-        } else {
+        }
+        else {
             encodeMarkup(context, codeMirror);
             encodeScript(context, codeMirror);
         }
@@ -101,12 +100,13 @@ public class CodeMirrorRenderer extends InputRenderer {
 
         renderPassThruAttributes(context, codeMirror, HTML.INPUT_TEXTAREA_ATTRS);
         renderDomEvents(context, codeMirror, HTML.INPUT_TEXT_EVENTS);
-        
+
         final String valueToRender = ComponentUtils.getValueToRender(context, codeMirror);
         if (valueToRender != null) {
             if (codeMirror.isEscape()) {
                 writer.writeText(valueToRender, null);
-            } else {
+            }
+            else {
                 writer.write(valueToRender);
             }
         }
@@ -118,25 +118,25 @@ public class CodeMirrorRenderer extends InputRenderer {
         WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
         wb.initWithDomReady("ExtCodeMirror", codeMirror.resolveWidgetVar(), codeMirror.getClientId());
         wb.attr("theme", codeMirror.getTheme())
-                .attr("mode", codeMirror.getMode())
-                .attr("indentUnit", codeMirror.getIndentUnit())
-                .attr("smartIndent", codeMirror.isSmartIndent())
-                .attr("tabSize", codeMirror.getTabSize())
-                .attr("indentWithTabs", codeMirror.isIndentWithTabs())
-                .attr("electricChars", codeMirror.isElectricChars())
-                .attr("keyMap", codeMirror.getKeyMap())
-                .attr("lineWrapping", codeMirror.isLineWrapping())
-                .attr("lineNumbers", codeMirror.isLineNumbers())
-                .attr("firstLineNumber", codeMirror.getFirstLineNumber())
-                .attr("gutter", codeMirror.isGutter())
-                .attr("fixedGutter", codeMirror.isFixedGutter())
-                .attr("readOnly", codeMirror.isReadonly())
-                .attr("matchBrackets", codeMirror.isMatchBrackets())
-                .attr("workTime", codeMirror.getWorkTime())
-                .attr("workDelay", codeMirror.getWorkDelay())
-                .attr("pollInterval", codeMirror.getPollInterval())
-                .attr("tabindex", codeMirror.getTabindex())
-                .attr("undoDepth", codeMirror.getUndoDepth());
+                    .attr("mode", codeMirror.getMode())
+                    .attr("indentUnit", codeMirror.getIndentUnit())
+                    .attr("smartIndent", codeMirror.isSmartIndent())
+                    .attr("tabSize", codeMirror.getTabSize())
+                    .attr("indentWithTabs", codeMirror.isIndentWithTabs())
+                    .attr("electricChars", codeMirror.isElectricChars())
+                    .attr("keyMap", codeMirror.getKeyMap())
+                    .attr("lineWrapping", codeMirror.isLineWrapping())
+                    .attr("lineNumbers", codeMirror.isLineNumbers())
+                    .attr("firstLineNumber", codeMirror.getFirstLineNumber())
+                    .attr("gutter", codeMirror.isGutter())
+                    .attr("fixedGutter", codeMirror.isFixedGutter())
+                    .attr("readOnly", codeMirror.isReadonly())
+                    .attr("matchBrackets", codeMirror.isMatchBrackets())
+                    .attr("workTime", codeMirror.getWorkTime())
+                    .attr("workDelay", codeMirror.getWorkDelay())
+                    .attr("pollInterval", codeMirror.getPollInterval())
+                    .attr("tabindex", codeMirror.getTabindex())
+                    .attr("undoDepth", codeMirror.getUndoDepth());
 
         if (codeMirror.getExtraKeys() != null) {
             wb.append(",extraKeys:" + codeMirror.getExtraKeys());
@@ -193,7 +193,8 @@ public class CodeMirrorRenderer extends InputRenderer {
 
             if (codeMirror.isEscapeSuggestions()) {
                 writer.writeText(suggestion, null);
-            } else {
+            }
+            else {
                 writer.write(suggestion);
             }
 

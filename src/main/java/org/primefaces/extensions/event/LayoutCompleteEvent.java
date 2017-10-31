@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,27 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.event;
 
-import org.primefaces.event.AbstractAjaxBehaviorEvent;
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
+
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
  * Event which is triggered by the {@link org.primefaces.extensions.component.fluidgrid.FluidGrid} components.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   1.1.0
+ * @since 1.1.0
  */
 @SuppressWarnings("serial")
 public class LayoutCompleteEvent extends AbstractAjaxBehaviorEvent {
 
-	public LayoutCompleteEvent(final UIComponent component, final Behavior behavior) {
-		super(component, behavior);
-	}
+    public LayoutCompleteEvent(final UIComponent component, final Behavior behavior) {
+        super(component, behavior);
+    }
 }

@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.component.dynaform;
 
 import java.io.IOException;
@@ -37,6 +34,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormModelElement;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.CompositeUtils;
+import org.primefaces.util.Constants;
 
 /**
  * Renderer for {@link DynaForm} component.
@@ -72,7 +70,7 @@ public class DynaFormRenderer extends CoreRenderer {
     private static final String BUTTON_BAR_ROLE = "toolbar";
     private static final String GRID_CELL_ROLE = "gridcell";
 
-    private static final String[] EMPTY_COLUMN_CLASSES = new String[] { "", "" };
+    private static final String[] EMPTY_COLUMN_CLASSES = new String[] { Constants.EMPTY_STRING, Constants.EMPTY_STRING };
 
     @Override
     public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
@@ -100,7 +98,7 @@ public class DynaFormRenderer extends CoreRenderer {
 
         writer.writeAttribute("role", "grid", null);
 
-		// prepare labels with informations about corresponding control components
+        // prepare labels with informations about corresponding control components
         preRenderLabel(fc, dynaForm, dynaFormModel);
 
         int totalColspan = getTotalColspan(dynaFormModel);
@@ -120,14 +118,14 @@ public class DynaFormRenderer extends CoreRenderer {
         if (encodeFacet) {
             encodeFacet(fc, dynaForm, FACET_FOOTER_REGULAR, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, false, true);
             encodeFacet(fc, dynaForm, FACET_HEADER_EXTENDED, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, true,
-                    dynaForm.isOpenExtended());
+                        dynaForm.isOpenExtended());
         }
         // encode extended grid
         encodeBody(fc, dynaForm, dynaFormModel.getExtendedRows(), true, dynaForm.isOpenExtended());
 
         if (encodeFacet) {
             encodeFacet(fc, dynaForm, FACET_FOOTER_EXTENDED, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, true,
-                    dynaForm.isOpenExtended());
+                        dynaForm.isOpenExtended());
         }
 
         if (encodeFacet && "bottom".equals(bbPosition) || "both".equals(bbPosition)) {
@@ -155,7 +153,7 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     protected void encodeFacet(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass, String role,
-            boolean extended, boolean visible) throws IOException {
+                boolean extended, boolean visible) throws IOException {
         final UIComponent facet = dynaForm.getFacet(name);
         if (facet != null && facet.isRendered()) {
             ResponseWriter writer = fc.getResponseWriter();
@@ -184,8 +182,8 @@ public class DynaFormRenderer extends CoreRenderer {
         }
     }
 
-	protected void encodeBody(FacesContext fc, DynaForm dynaForm, List<DynaFormRow> dynaFormRows, boolean extended,
-	                          boolean visible) throws IOException {
+    protected void encodeBody(FacesContext fc, DynaForm dynaForm, List<DynaFormRow> dynaFormRows, boolean extended,
+                boolean visible) throws IOException {
         if (dynaFormRows == null || dynaFormRows.isEmpty()) {
             return;
         }
@@ -250,7 +248,8 @@ public class DynaFormRenderer extends CoreRenderer {
                     if (label.getValue() != null) {
                         if (label.isEscape()) {
                             writer.writeText(label.getValue(), "value");
-                        } else {
+                        }
+                        else {
                             writer.write(label.getValue());
                         }
                     }
@@ -263,7 +262,8 @@ public class DynaFormRenderer extends CoreRenderer {
                     }
 
                     writer.endElement("label");
-                } else if (element instanceof DynaFormControl) {
+                }
+                else if (element instanceof DynaFormControl) {
                     // render control
                     DynaFormControl control = (DynaFormControl) element;
                     dynaForm.setData(control);
@@ -283,7 +283,8 @@ public class DynaFormRenderer extends CoreRenderer {
                     writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
                     cell.encodeAll(fc);
-                } else if (element instanceof DynaFormModelElement) {
+                }
+                else if (element instanceof DynaFormModelElement) {
                     DynaFormModelElement nestedModel = (DynaFormModelElement) element;
 
                     // render nested model
@@ -320,9 +321,9 @@ public class DynaFormRenderer extends CoreRenderer {
                         continue;
                     }
 
-                    String targetClientId = (target instanceof InputHolder) 
-                            ? ((InputHolder) target).getInputClientId()
-                            : target.getClientId(fc);
+                    String targetClientId = (target instanceof InputHolder)
+                                ? ((InputHolder) target).getInputClientId()
+                                : target.getClientId(fc);
                     dynaFormLabel.setTargetClientId(targetClientId);
 
                     ContextCallback callback = new ContextCallback() {
@@ -336,7 +337,8 @@ public class DynaFormRenderer extends CoreRenderer {
 
                     if (CompositeUtils.isComposite(target)) {
                         CompositeUtils.invokeOnDeepestEditableValueHolder(fc, target, callback);
-                    } else {
+                    }
+                    else {
                         callback.invokeContextCallback(fc, target);
                     }
 

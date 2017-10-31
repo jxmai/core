@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,21 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.application;
-
-import org.primefaces.extensions.util.Constants;
 
 import javax.faces.application.Resource;
 import javax.faces.application.ResourceHandler;
 import javax.faces.application.ResourceHandlerWrapper;
 
+import org.primefaces.extensions.util.Constants;
+
 /**
- * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and
- * appends the version of PrimeFaces Extensions in the {@link PrimeFacesExtensionsResource}.
+ * {@link ResourceHandlerWrapper} which wraps PrimeFaces Extensions resources and appends the version of PrimeFaces Extensions in the
+ * {@link PrimeFacesExtensionsResource}.
  *
  * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$

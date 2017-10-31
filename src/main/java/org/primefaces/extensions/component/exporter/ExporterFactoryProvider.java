@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,10 +38,10 @@ public class ExporterFactoryProvider {
         if (factory == null) {
             ServiceLoader<ExporterFactory> loader = ServiceLoader.load(ExporterFactory.class);
             if (loader != null) {
-               Iterator<ExporterFactory> iterator = loader.iterator();
-               if (iterator.hasNext()) {
-                  factory = iterator.next();
-               }
+                Iterator<ExporterFactory> iterator = loader.iterator();
+                if (iterator.hasNext()) {
+                    factory = iterator.next();
+                }
             }
 
             if (factory == null) {
@@ -58,8 +58,7 @@ public class ExporterFactoryProvider {
 class DefaultExporterFactory implements ExporterFactory {
 
     static public enum ExporterType {
-        PDF,
-        XLSX
+        PDF, XLSX
     }
 
     public Exporter getExporterForType(String type) {
@@ -85,7 +84,8 @@ class DefaultExporterFactory implements ExporterFactory {
                 }
 
             }
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new FacesException(e);
         }
 

@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.component.codemirror;
 
 import java.util.List;
@@ -36,17 +33,17 @@ import org.primefaces.facelets.MethodRule;
  */
 public class CodeMirrorHandler extends ComponentHandler {
 
-	public CodeMirrorHandler(final ComponentConfig config) {
-		super(config);
-	}
+    public CodeMirrorHandler(final ComponentConfig config) {
+        super(config);
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	protected MetaRuleset createMetaRuleset(final Class type) {
-		final MetaRuleset metaRuleset = super.createMetaRuleset(type);
+    @Override
+    @SuppressWarnings("unchecked")
+    protected MetaRuleset createMetaRuleset(final Class type) {
+        final MetaRuleset metaRuleset = super.createMetaRuleset(type);
 
-		metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { CompleteEvent.class }));
+        metaRuleset.addRule(new MethodRule("completeMethod", List.class, new Class[] { CompleteEvent.class }));
 
-		return metaRuleset;
-	}
+        return metaRuleset;
+    }
 }

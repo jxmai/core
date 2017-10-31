@@ -1,3 +1,18 @@
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.primefaces.extensions.component.sdashboard;
 
 import java.util.Arrays;
@@ -21,6 +36,11 @@ import org.primefaces.extensions.event.SDashboardReorderEvent;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
+/**
+ * 
+ * @author jm
+ *
+ */
 @ResourceDependencies({
         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
@@ -43,7 +63,7 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
     protected enum PropertyKeys {
         widgetVar, widgetId, widgetTitle, widgetContent, onRefreshCallBack, onAddCallBack, onEditCallBack;
 
-        String toString;
+        private String toString;
 
         PropertyKeys(final String toString) {
             this.toString = toString;
@@ -55,6 +75,14 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
         @Override
         public String toString() {
             return toString != null ? toString : super.toString();
+        }
+
+        public String getToString() {
+            return toString;
+        }
+
+        public void setToString(String toString) {
+            this.toString = toString;
         }
     }
 
@@ -81,7 +109,8 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
     public void processDecodes(FacesContext fc) {
         if (isSelfRequest(fc)) {
             decode(fc);
-        } else {
+        } 
+        else {
             super.processDecodes(fc);
         }
     }
@@ -101,7 +130,8 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
                         behaviorEvent.getBehavior());
                 sDashboardRefreshEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(sDashboardRefreshEvent);
-            } else if (SDashboardReorderEvent.NAME.equals(eventName)) {
+            } 
+            else if (SDashboardReorderEvent.NAME.equals(eventName)) {
 
                 String sortedDefinitionsJSONString = params.get(clientId + "_sortedDefinitions");
 
@@ -110,14 +140,16 @@ public class SDashboard extends UIData implements Widget, ClientBehaviorHolder {
                 sDashboardReorderEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(sDashboardReorderEvent);
 
-            } else if (SDashboardExpandEvent.NAME.equals(eventName)) {
+            } 
+            else if (SDashboardExpandEvent.NAME.equals(eventName)) {
                 String widgetDefinitionJSONString = params.get(clientId + "_widgetDefinitions");
 
                 SDashboardExpandEvent sDashboardExpandEvent = new SDashboardExpandEvent(this,
                         behaviorEvent.getBehavior(), widgetDefinitionJSONString);
                 sDashboardExpandEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(sDashboardExpandEvent);
-            } else if (SDashboardDeleteEvent.NAME.equals(eventName)) {
+            } 
+            else if (SDashboardDeleteEvent.NAME.equals(eventName)) {
                 String deletedWidgetId = params.get(clientId + "_widgetId");
 
                 SDashboardDeleteEvent sDashboardDeleteEvent = new SDashboardDeleteEvent(this,

@@ -1,3 +1,18 @@
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.primefaces.extensions.component.orgchart;
 
 import java.util.Arrays;
@@ -19,6 +34,11 @@ import org.primefaces.extensions.event.OrgChartDropEvent;
 import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.Constants;
 
+/**
+ * 
+ * @author jm
+ *
+ */
 @ResourceDependencies({
         @ResourceDependency(library = "primefaces", name = "jquery/jquery.js"),
         @ResourceDependency(library = "primefaces", name = "jquery/jquery-plugins.js"),
@@ -37,15 +57,16 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
             .unmodifiableCollection(Arrays.asList(OrgChartClickEvent.NAME, OrgChartDropEvent.NAME));
 
     protected enum PropertyKeys {
-        nodeId, widgetVar, nodeContent, direction, pan, toggleSiblingsResp, depth, exportButton, exportFilename, exportFileextension, parentNodeSymbol, draggable, chartClass, zoom, zoominLimit, zoomoutLimit, verticalDepth, nodeTitle;
+        nodeId, widgetVar, nodeContent, direction, pan, toggleSiblingsResp, depth, exportButton, exportFilename, exportFileextension,
+        parentNodeSymbol, draggable, chartClass, zoom, zoominLimit, zoomoutLimit, verticalDepth, nodeTitle;
 
-        String toString;
-
-        PropertyKeys(final String toString) {
-            this.toString = toString;
-        }
+        private String toString;
 
         PropertyKeys() {
+        }
+        
+        PropertyKeys(final String toString) {
+            this.toString = toString;
         }
 
         @Override
@@ -82,7 +103,8 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
     public void processDecodes(FacesContext fc) {
         if (isSelfRequest(fc)) {
             decode(fc);
-        } else {
+        } 
+        else {
             super.processDecodes(fc);
         }
     }
@@ -107,7 +129,8 @@ public class OrgChart extends UIData implements Widget, ClientBehaviorHolder {
                         behaviorEvent.getBehavior(), id, hierarchyStr);
                 orgChartClickEvent.setPhaseId(event.getPhaseId());
                 super.queueEvent(orgChartClickEvent);
-            } else if (OrgChartDropEvent.NAME.equals(eventName)) {
+            } 
+            else if (OrgChartDropEvent.NAME.equals(eventName)) {
                 String hierarchyStr = params.get(clientId + "_hierarchy");
 
                 String draggedNodeId = params.get(clientId + "_draggedNodeId");

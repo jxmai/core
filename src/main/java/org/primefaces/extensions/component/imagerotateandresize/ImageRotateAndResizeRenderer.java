@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,18 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.component.imagerotateandresize;
 
 import java.io.IOException;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import org.primefaces.context.RequestContext;
 
+import org.primefaces.context.RequestContext;
 import org.primefaces.expression.SearchExpressionFacade;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.WidgetBuilder;
@@ -31,26 +28,26 @@ import org.primefaces.util.WidgetBuilder;
 /**
  * Renderer for the {@link ImageRotateAndResize} component.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.1
+ * @since 0.1
  */
 public class ImageRotateAndResizeRenderer extends CoreRenderer {
 
-	@Override
-	public void decode(final FacesContext context, final UIComponent component) {
-		decodeBehaviors(context, component);
-	}
+    @Override
+    public void decode(final FacesContext context, final UIComponent component) {
+        decodeBehaviors(context, component);
+    }
 
-	@Override
-	public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
-		final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
+    @Override
+    public void encodeEnd(final FacesContext context, final UIComponent component) throws IOException {
+        final ImageRotateAndResize imageRotateAndResize = (ImageRotateAndResize) component;
 
         WidgetBuilder wb = RequestContext.getCurrentInstance().getWidgetBuilder();
         wb.initWithDomReady("ExtImageRotateAndResize", imageRotateAndResize.resolveWidgetVar(), imageRotateAndResize.getClientId());
         wb.attr("target", SearchExpressionFacade.resolveClientId(context, imageRotateAndResize, imageRotateAndResize.getFor()));
 
-		encodeClientBehaviors(context, imageRotateAndResize);
+        encodeClientBehaviors(context, imageRotateAndResize);
         wb.finish();
-	}
+    }
 }

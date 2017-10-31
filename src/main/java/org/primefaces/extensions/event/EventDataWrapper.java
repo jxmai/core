@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.event;
 
 import javax.faces.component.UIComponent;
@@ -28,46 +25,46 @@ import org.primefaces.extensions.model.common.KeyData;
 /**
  * Event wrapper.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
- * @since   0.5
+ * @since 0.5
  */
 public class EventDataWrapper extends FacesEvent {
 
-	private FacesEvent event = null;
-	private KeyData data = null;
+    private FacesEvent event = null;
+    private KeyData data = null;
 
-	public EventDataWrapper(final UIComponent component, final FacesEvent event, final KeyData data) {
-		super(component);
-		this.event = event;
-		this.data = data;
-	}
+    public EventDataWrapper(final UIComponent component, final FacesEvent event, final KeyData data) {
+        super(component);
+        this.event = event;
+        this.data = data;
+    }
 
-	public FacesEvent getFacesEvent() {
-		return this.event;
-	}
+    public FacesEvent getFacesEvent() {
+        return this.event;
+    }
 
-	public KeyData getData() {
-		return data;
-	}
+    public KeyData getData() {
+        return data;
+    }
 
-	@Override
-	public PhaseId getPhaseId() {
-		return this.event.getPhaseId();
-	}
+    @Override
+    public PhaseId getPhaseId() {
+        return this.event.getPhaseId();
+    }
 
-	@Override
-	public void setPhaseId(PhaseId phaseId) {
-		this.event.setPhaseId(phaseId);
-	}
+    @Override
+    public void setPhaseId(PhaseId phaseId) {
+        this.event.setPhaseId(phaseId);
+    }
 
-	@Override
-	public boolean isAppropriateListener(FacesListener listener) {
-		return false;
-	}
+    @Override
+    public boolean isAppropriateListener(FacesListener listener) {
+        return false;
+    }
 
-	@Override
-	public void processListener(FacesListener listener) {
-		throw new IllegalStateException("processListener is not supported in EventWrapper");
-	}
+    @Override
+    public void processListener(FacesListener listener) {
+        throw new IllegalStateException("processListener is not supported in EventWrapper");
+    }
 }

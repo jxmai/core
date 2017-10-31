@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.renderkit.layout;
 
 import org.primefaces.extensions.model.layout.LayoutOptions;
@@ -26,21 +23,21 @@ import com.google.gson.GsonBuilder;
 /**
  * Singleton instance of Gson to convert layout options.
  *
- * @author  Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by $Author$
  * @version $Revision$
  */
 public class GsonLayoutOptions {
 
-	private static final GsonLayoutOptions INSTANCE = new GsonLayoutOptions();
-	private Gson gson;
+    private static final GsonLayoutOptions INSTANCE = new GsonLayoutOptions();
+    private Gson gson;
 
-	private GsonLayoutOptions() {
-		GsonBuilder gsonBilder = new GsonBuilder();
-		gsonBilder.registerTypeAdapter(LayoutOptions.class, new LayoutOptionsSerializer());
-		gson = gsonBilder.create();
-	}
+    private GsonLayoutOptions() {
+        GsonBuilder gsonBilder = new GsonBuilder();
+        gsonBilder.registerTypeAdapter(LayoutOptions.class, new LayoutOptionsSerializer());
+        gson = gsonBilder.create();
+    }
 
-	public static Gson getGson() {
-		return INSTANCE.gson;
-	}
+    public static Gson getGson() {
+        return INSTANCE.gson;
+    }
 }

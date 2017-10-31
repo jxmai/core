@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2016 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.event;
 
@@ -23,8 +21,7 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.layout.Layout} and
+ * Event which is triggered by the {@link org.primefaces.extensions.component.layout.Layout} and
  * {@link org.primefaces.extensions.component.timepicker.TimePicker} components.
  *
  * @author Oleg Varaksin / last modified by $Author$
@@ -34,9 +31,9 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 @SuppressWarnings("serial")
 public class OpenEvent extends AbstractAjaxBehaviorEvent {
 
-   public static final String NAME = "open";
+    public static final String NAME = "open";
 
-   public OpenEvent(final UIComponent component, final Behavior behavior) {
-      super(component, behavior);
-   }
+    public OpenEvent(final UIComponent component, final Behavior behavior) {
+        super(component, behavior);
+    }
 }

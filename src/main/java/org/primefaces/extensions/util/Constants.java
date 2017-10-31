@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,29 +12,26 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.util;
 
 /**
  * Global constants for the project.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public final class Constants {
 
-	public static final String LIBRARY = "primefaces-extensions";
+    public static final String LIBRARY = "primefaces-extensions";
 
-	public static final String EXTENSION_CSS = ".css";
-	public static final String EXTENSION_JS = ".js";
+    public static final String EXTENSION_CSS = ".css";
+    public static final String EXTENSION_JS = ".js";
 
-	/**
-	 * Avoid instantiation.
-	 */
-	private Constants() {
-	}
+    /**
+     * Avoid instantiation.
+     */
+    private Constants() {
+    }
 }

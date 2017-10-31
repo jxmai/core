@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2015 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,10 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
-
 package org.primefaces.extensions.behavior.javascript;
 
 import javax.faces.application.Application;
@@ -31,30 +28,30 @@ import org.primefaces.behavior.base.AbstractBehaviorHandler;
 /**
  * {@link BehaviorHolderAttachedObjectHandler} and {@link TagHandler} implementation for the {@link JavascriptBehavior}.
  *
- * @author  Thomas Andraschko / last modified by $Author$
+ * @author Thomas Andraschko / last modified by $Author$
  * @version $Revision$
- * @since   0.2
+ * @since 0.2
  */
 public class JavascriptBehaviorHandler extends AbstractBehaviorHandler<JavascriptBehavior> {
 
-	private final TagAttribute execute;
-	private final TagAttribute disabled;
+    private final TagAttribute execute;
+    private final TagAttribute disabled;
 
-	public JavascriptBehaviorHandler(final BehaviorConfig config) {
-		super(config);
+    public JavascriptBehaviorHandler(final BehaviorConfig config) {
+        super(config);
 
-		this.execute = this.getAttribute(JavascriptBehavior.PropertyKeys.execute.name());
-		this.disabled = this.getAttribute(JavascriptBehavior.PropertyKeys.disabled.name());
-	}
+        this.execute = this.getAttribute(JavascriptBehavior.PropertyKeys.execute.name());
+        this.disabled = this.getAttribute(JavascriptBehavior.PropertyKeys.disabled.name());
+    }
 
-        @Override
-	protected JavascriptBehavior createBehavior(final FaceletContext faceletContext, final String eventName, UIComponent component) {
-		final Application application = faceletContext.getFacesContext().getApplication();
-		final JavascriptBehavior behavior = (JavascriptBehavior) application.createBehavior(JavascriptBehavior.BEHAVIOR_ID);
+    @Override
+    protected JavascriptBehavior createBehavior(final FaceletContext faceletContext, final String eventName, UIComponent component) {
+        final Application application = faceletContext.getFacesContext().getApplication();
+        final JavascriptBehavior behavior = (JavascriptBehavior) application.createBehavior(JavascriptBehavior.BEHAVIOR_ID);
 
-		setBehaviorAttribute(faceletContext, behavior, this.disabled, Boolean.class);
-		setBehaviorAttribute(faceletContext, behavior, this.execute, String.class);
+        setBehaviorAttribute(faceletContext, behavior, this.disabled, Boolean.class);
+        setBehaviorAttribute(faceletContext, behavior, this.execute, String.class);
 
-		return behavior;
-	}
+        return behavior;
+    }
 }

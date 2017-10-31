@@ -1,5 +1,5 @@
-/*
- * Copyright 2011-2016 PrimeFaces Extensions
+/**
+ * Copyright 2011-2017 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,8 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * $Id$
  */
 package org.primefaces.extensions.event;
 
@@ -25,9 +23,7 @@ import javax.faces.component.behavior.Behavior;
 import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
- * Event which is triggered by the
- * {@link org.primefaces.extensions.component.calculator.Calculator} component
- * when a button is pressed.
+ * Event which is triggered by the {@link org.primefaces.extensions.component.calculator.Calculator} component when a button is pressed.
  *
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
@@ -35,23 +31,23 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
 @SuppressWarnings("serial")
 public class ButtonEvent extends AbstractAjaxBehaviorEvent {
 
-   public static final String NAME = "button";
+    public static final String NAME = "button";
 
-   private final String name;
-   private final BigDecimal value;
+    private final String name;
+    private final BigDecimal value;
 
-   public ButtonEvent(final UIComponent component, final Behavior behavior, final String name, final BigDecimal value) {
-      super(component, behavior);
-      this.name = name;
-      this.value = value;
-   }
+    public ButtonEvent(final UIComponent component, final Behavior behavior, final String name, final BigDecimal value) {
+        super(component, behavior);
+        this.name = name;
+        this.value = value;
+    }
 
-   public final String getName() {
-      return name;
-   }
+    public final String getName() {
+        return name;
+    }
 
-   public final BigDecimal getValue() {
-      return value;
-   }
+    public final BigDecimal getValue() {
+        return value;
+    }
 
 }
