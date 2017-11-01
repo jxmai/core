@@ -247,7 +247,7 @@
 				var widgetContainer = $("<div/>").addClass("sDashboardWidget");
 
 				//create a widget header
-				var widgetHeader = $("<div/>").addClass("sDashboardWidgetHeader sDashboard-clearfix");
+				var widgetHeader = $("<div/>").addClass("sDashboardWidgetHeader sDashboard-clearfix ui-widget-header");
 				var maximizeButton = $('<div title="Maximize" class="sDashboard-icon sDashboard-circle-plus-icon "></span>');
 
 				var deleteButton = $('<div title="Close" class="sDashboard-icon sDashboard-circle-remove-icon"></div>');
