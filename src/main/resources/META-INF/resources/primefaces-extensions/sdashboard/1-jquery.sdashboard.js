@@ -209,11 +209,11 @@
 					var widget = $(e.currentTarget).parents("li:first");
 					var widgetId = widget.attr("id");
 					//show hide effect
-					widget.hide("fold", {}, 300, function() {
+					/*widget.hide("fold", {}, 300, function() {
 						self._removeWidgetFromWidgetDefinitions(this.id);
 						$(this).remove();
 						$(".sDashboard-overlay").hide();
-					});
+					});*/
 					// TODO: to be removed
 //					$(this).trigger('sdashboardClose');
 					$(this).trigger('sdashboardRemove', [widgetId]);
