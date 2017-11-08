@@ -66,6 +66,7 @@
 								<include>qrcode/**</include>
 								<include>slideout/**</include>
 								<include>social/**</include>
+								<include>speedtest/**</include>
 								<include>timepicker/**</include>
 								<include>timer/**</include>
 								<include>tooltip/**</include>
@@ -289,13 +290,15 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.6</version>
+				<version>3.8</version>
 				<configuration>
 					<aggregate>true</aggregate>
 					<minimumTokens>100</minimumTokens>
 					<linkXref>true</linkXref>
 					<sourceEncoding>utf-8</sourceEncoding>
 					<targetJdk>${java.version.source}</targetJdk>
+					<skipEmptyReport>false</skipEmptyReport>
+					<ignoreLiterals>false</ignoreLiterals>
 					<excludes>
 						<exclude>**/generated-sources/**/*.java</exclude>
 					</excludes>
@@ -309,11 +312,18 @@
 						<ruleset>${basedir}/pmd-rulesets.xml</ruleset>
 					</rulesets>
 				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>pmd</report>
+						</reports>
+					</reportSet>
+				</reportSets>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.4</version>
+				<version>3.0.5</version>
 				<configuration>
 					<effort>Max</effort>
 					<threshold>Default</threshold>
