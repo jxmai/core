@@ -50,6 +50,7 @@ public class DocumentViewer extends UIGraphic {
         width, 
         height, 
         style, 
+        title, 
         name, 
         library, 
         cache, 
@@ -78,20 +79,20 @@ public class DocumentViewer extends UIGraphic {
         return appropriateLocale;
     }
 
-    public Integer getWidth() {
-        return (Integer) this.getStateHelper().eval(PropertyKeys.width, null);
+    public String getWidth() {
+        return (String) this.getStateHelper().eval(PropertyKeys.width, null);
     }
 
-    public void setWidth(final Integer width) {
+    public void setWidth(final String width) {
         this.getStateHelper().put(PropertyKeys.width, width);
     }
 
-    public Integer getHeight() {
-        return (Integer) this.getStateHelper().eval(PropertyKeys.height, null);
+    public String getHeight() {
+        return (String) this.getStateHelper().eval(PropertyKeys.height, null);
     }
 
-    public void setHeight(final Integer width) {
-        this.getStateHelper().put(PropertyKeys.height, width);
+    public void setHeight(final String height) {
+        this.getStateHelper().put(PropertyKeys.height, height);
     }
 
     public String getStyle() {
@@ -108,6 +109,14 @@ public class DocumentViewer extends UIGraphic {
 
     public void setName(final String _name) {
         getStateHelper().put(PropertyKeys.name, _name);
+    }
+
+    public String getTitle() {
+        return (String) getStateHelper().eval(PropertyKeys.title, null);
+    }
+
+    public void setTitle(final String _title) {
+        getStateHelper().put(PropertyKeys.title, _title);
     }
 
     public String getLibrary() {
