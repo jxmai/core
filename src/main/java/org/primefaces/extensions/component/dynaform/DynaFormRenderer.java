@@ -35,6 +35,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import org.primefaces.renderkit.CoreRenderer;
 import org.primefaces.util.CompositeUtils;
 import org.primefaces.util.Constants;
+import org.primefaces.util.WidgetBuilder;
 
 /**
  * Renderer for {@link DynaForm} component.
@@ -54,6 +55,7 @@ public class DynaFormRenderer extends CoreRenderer {
     private static final String FACET_BUTTON_BAR = "buttonBar";
 
     private static final String GRID_CLASS = "pe-dynaform-grid";
+    private static final String NESTED_GRID_CLASS = "pe-dynaform-nested-grid";
     private static final String CELL_CLASS = "pe-dynaform-cell";
     private static final String CELL_FIRST_CLASS = "pe-dynaform-cell-first";
     private static final String CELL_LAST_CLASS = "pe-dynaform-cell-last";
@@ -78,18 +80,23 @@ public class DynaFormRenderer extends CoreRenderer {
 
         // get model
         DynaFormModel dynaFormModel = (DynaFormModel) dynaForm.getValue();
-        encodeMarkup(fc, dynaForm, dynaFormModel, true);
+        encodeMarkup(fc, dynaForm, dynaFormModel, false);
         encodeScript(fc, dynaForm, dynaFormModel);
     }
 
-    protected void encodeMarkup(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel, boolean encodeFacet) throws IOException {
+    protected void encodeMarkup(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel, boolean nestedGrid) throws IOException {
         ResponseWriter writer = fc.getResponseWriter();
-        String clientId = dynaForm.getClientId(fc);
-
-        String styleClass = (dynaForm.getStyleClass() == null ? GRID_CLASS : GRID_CLASS + " " + dynaForm.getStyleClass());
 
         writer.startElement("table", dynaForm);
-        writer.writeAttribute("id", clientId, "id");
+
+        if (!nestedGrid) {
+            String clientId = dynaForm.getClientId(fc);
+            writer.writeAttribute("id", clientId, "id");
+        }
+
+        String styleClass = nestedGrid ? NESTED_GRID_CLASS : GRID_CLASS;
+        styleClass += dynaForm.getStyleClass() == null ? Constants.EMPTY_STRING : " " + dynaForm.getStyleClass();
+
         writer.writeAttribute("cellspacing", "0", "cellspacing");
         writer.writeAttribute("class", styleClass, "styleClass");
         if (dynaForm.getStyle() != null) {
@@ -104,18 +111,18 @@ public class DynaFormRenderer extends CoreRenderer {
         int totalColspan = getTotalColspan(dynaFormModel);
         String bbPosition = dynaForm.getButtonBarPosition();
 
-        if (encodeFacet && "top".equals(bbPosition) || "both".equals(bbPosition)) {
+        if (!nestedGrid && "top".equals(bbPosition) || "both".equals(bbPosition)) {
             encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_TOP_CLASS, BUTTON_BAR_ROLE, false, true);
         }
 
-        if (encodeFacet) {
+        if (!nestedGrid) {
             encodeFacet(fc, dynaForm, FACET_HEADER_REGULAR, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, false, true);
         }
 
         // encode regular grid
         encodeBody(fc, dynaForm, dynaFormModel.getRegularRows(), false, true);
 
-        if (encodeFacet) {
+        if (!nestedGrid) {
             encodeFacet(fc, dynaForm, FACET_FOOTER_REGULAR, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, false, true);
             encodeFacet(fc, dynaForm, FACET_HEADER_EXTENDED, totalColspan, FACET_HEADER_CLASS, GRID_CELL_ROLE, true,
                         dynaForm.isOpenExtended());
@@ -123,12 +130,12 @@ public class DynaFormRenderer extends CoreRenderer {
         // encode extended grid
         encodeBody(fc, dynaForm, dynaFormModel.getExtendedRows(), true, dynaForm.isOpenExtended());
 
-        if (encodeFacet) {
+        if (!nestedGrid) {
             encodeFacet(fc, dynaForm, FACET_FOOTER_EXTENDED, totalColspan, FACET_FOOTER_CLASS, GRID_CELL_ROLE, true,
                         dynaForm.isOpenExtended());
         }
 
-        if (encodeFacet && "bottom".equals(bbPosition) || "both".equals(bbPosition)) {
+        if (!nestedGrid && "bottom".equals(bbPosition) || "both".equals(bbPosition)) {
             encodeFacet(fc, dynaForm, FACET_BUTTON_BAR, totalColspan, FACET_BUTTON_BAR_BOTTOM_CLASS, BUTTON_BAR_ROLE, false, true);
         }
 
@@ -136,20 +143,13 @@ public class DynaFormRenderer extends CoreRenderer {
     }
 
     protected void encodeScript(FacesContext fc, DynaForm dynaForm, DynaFormModel dynaFormModel) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
+        WidgetBuilder wb = getWidgetBuilder(fc);
         String clientId = dynaForm.getClientId(fc);
-        String widgetVar = dynaForm.resolveWidgetVar();
-
-        startScript(writer, clientId);
-        writer.write("$(function() {");
-        writer.write("PrimeFaces.cw('ExtDynaForm','" + widgetVar + "',{");
-        writer.write("id:'" + clientId + "'");
-        writer.write(",widgetVar:'" + widgetVar + "'");
-        writer.write(",uuid:'" + dynaFormModel.getUuid() + "'");
-        writer.write(",autoSubmit:" + dynaForm.isAutoSubmit());
-        writer.write(",isPostback:" + fc.isPostback());
-        writer.write("});});");
-        endScript(writer);
+        wb.initWithDomReady("ExtDynaForm", dynaForm.resolveWidgetVar(), clientId);
+        wb.attr("uuid", dynaFormModel.getUuid());
+        wb.attr("autoSubmit", dynaForm.isAutoSubmit());
+        wb.attr("isPostback", fc.isPostback());
+        wb.finish();
     }
 
     protected void encodeFacet(FacesContext fc, DynaForm dynaForm, String name, int totalColspan, String styleClass, String role,
@@ -291,7 +291,7 @@ public class DynaFormRenderer extends CoreRenderer {
                     writer.writeAttribute("class", styleClass, null);
                     writer.writeAttribute("role", GRID_CELL_ROLE, null);
 
-                    encodeMarkup(fc, dynaForm, nestedModel.getModel(), false);
+                    encodeMarkup(fc, dynaForm, nestedModel.getModel(), true);
                 }
 
                 writer.endElement("td");
