@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,6 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
                 throws ConverterException {
         // only convert the values of the maps
         if (submittedValue instanceof Map) {
-            @SuppressWarnings("unchecked")
             Map<String, Object> mapSub = (Map<String, Object>) submittedValue;
             List<String> keyValues = new ArrayList<String>(mapSub.keySet());
             Map<String, Object> mapSubConv = new LinkedHashMap<String, Object>();
@@ -332,7 +331,6 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected Map<String, Object> getValues(UIComponent component) {
         UISelectMany selectMany = (UISelectMany) component;
         Object value = selectMany.getValue();
@@ -371,7 +369,6 @@ public class TriStateManyCheckboxRenderer extends SelectManyRenderer {
 
     protected Map<String, Object> getSubmittedFromComp(UIComponent component) {
         TriStateManyCheckbox checkbox = (TriStateManyCheckbox) component;
-        @SuppressWarnings("unchecked")
         Map<String, Object> ret = (Map<String, Object>) checkbox.getSubmittedValue();
         if (ret != null) {
             Map<String, Object> subValues = new LinkedHashMap<String, Object>();

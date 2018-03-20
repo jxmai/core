@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.FacesListener;
 
-@SuppressWarnings("serial")
 public class CompleteEvent extends FacesEvent {
 
     private final String token;

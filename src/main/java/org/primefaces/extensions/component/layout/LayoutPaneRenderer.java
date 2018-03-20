@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,14 +26,14 @@ import org.primefaces.renderkit.CoreRenderer;
 /**
  * Renderer for the {@link LayoutPane} component.
  *
- * @author Oleg Varaksin / last modified by $Author$
+ * @author Oleg Varaksin / last modified by Melloware
  * @version $Revision$
  * @since 0.6.0
  */
 public class LayoutPaneRenderer extends CoreRenderer {
 
     @Override
-    public void encodeBegin(FacesContext fc, UIComponent component) throws IOException {
+    public void encodeEnd(FacesContext fc, UIComponent component) throws IOException {
         ResponseWriter writer = fc.getResponseWriter();
         LayoutPane layoutPane = (LayoutPane) component;
 
@@ -159,11 +159,6 @@ public class LayoutPaneRenderer extends CoreRenderer {
         else {
             renderChildren(fc, layoutPane);
         }
-    }
-
-    @Override
-    public void encodeEnd(final FacesContext fc, final UIComponent component) throws IOException {
-        ResponseWriter writer = fc.getResponseWriter();
 
         writer.endElement("div");
     }

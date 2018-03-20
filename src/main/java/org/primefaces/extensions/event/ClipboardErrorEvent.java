@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @author Melloware mellowaredev@gmail.com
  * @since 6.1
  */
-@SuppressWarnings("serial")
 public class ClipboardErrorEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "error";

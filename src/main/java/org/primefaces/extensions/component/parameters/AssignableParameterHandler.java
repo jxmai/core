@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +82,6 @@ public class AssignableParameterHandler extends ComponentHandler {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected MetaRuleset createMetaRuleset(final Class type) {
         final MetaRuleset metaRuleset = super.createMetaRuleset(type);
         metaRuleset.addRule(META_RULE);

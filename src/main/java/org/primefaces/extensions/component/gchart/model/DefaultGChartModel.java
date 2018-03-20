@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,7 +73,6 @@ class DefaultGChartModel implements GChartModel {
         return GsonConverter.getGson().toJson(root);
     }
 
-    @SuppressWarnings("unchecked")
     protected JsonElement extractData() {
         Collection<Collection<Object>> dataTable = new ArrayList<Collection<Object>>(0);
 

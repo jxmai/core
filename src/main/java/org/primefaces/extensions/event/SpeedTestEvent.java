@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  */
 package org.primefaces.extensions.event;
 
-import org.primefaces.event.AbstractAjaxBehaviorEvent;
-
 import javax.faces.component.UIComponent;
 import javax.faces.component.behavior.Behavior;
+
+import org.primefaces.event.AbstractAjaxBehaviorEvent;
 
 /**
  * Event which is triggered by the {@link org.primefaces.extensions.component.speedtest.Speedtest} component has the test's finished.
@@ -26,7 +26,6 @@ import javax.faces.component.behavior.Behavior;
  * @author ssibitz ssibitz@me.com
  * @since 6.1
  */
-@SuppressWarnings("serial")
 public class SpeedTestEvent extends AbstractAjaxBehaviorEvent {
 
     public static final String NAME = "speedtest";
@@ -40,12 +39,12 @@ public class SpeedTestEvent extends AbstractAjaxBehaviorEvent {
     private final Double speedMbpsUpload;
 
     public SpeedTestEvent(final UIComponent component, final Behavior behavior,
-                          final Double _PingTimeMS, final Double _JitterTimeMS, final Double _SpeedMbpsDownload, final Double _SpeedMbpsUpload) {
+                final Double _PingTimeMS, final Double _JitterTimeMS, final Double _SpeedMbpsDownload, final Double _SpeedMbpsUpload) {
         super(component, behavior);
-        this.pingTimeMS         = _PingTimeMS;
-        this.jitterTimeMS       = _JitterTimeMS;
-        this.speedMbpsDownload  = _SpeedMbpsDownload;
-        this.speedMbpsUpload    = _SpeedMbpsUpload;
+        this.pingTimeMS = _PingTimeMS;
+        this.jitterTimeMS = _JitterTimeMS;
+        this.speedMbpsDownload = _SpeedMbpsDownload;
+        this.speedMbpsUpload = _SpeedMbpsUpload;
     }
 
     public final Double getPingTimeMS() {

@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import javax.faces.context.ResponseWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.extensions.model.layout.LayoutOptions;
 import org.primefaces.renderkit.CoreRenderer;
-import org.primefaces.util.FastStringWriter;
+import org.primefaces.util.ComponentUtils;
 import org.primefaces.util.WidgetBuilder;
 
 /**
@@ -48,17 +48,6 @@ public class LayoutRenderer extends CoreRenderer {
 
         final boolean buildOptions = layout.getOptions() == null;
         layout.setBuildOptions(buildOptions);
-
-        if (buildOptions) {
-            final FastStringWriter fsw = new FastStringWriter();
-            layout.setOriginalWriter(writer);
-            layout.setFastStringWriter(fsw);
-            fc.setResponseWriter(writer.cloneWithWriter(fsw));
-            writer = fc.getResponseWriter();
-        }
-        else {
-            encodeScript(fc, layout);
-        }
 
         if (!layout.isFullPage()) {
             writer.startElement("div", layout);
@@ -94,21 +83,9 @@ public class LayoutRenderer extends CoreRenderer {
             writer.endElement("div");
         }
 
-        if (layout.isBuildOptions()) {
-            fc.setResponseWriter(layout.getOriginalWriter());
-            encodeScript(fc, layout);
-            fc.getResponseWriter().write(layout.getFastStringWriter().toString());
-            layout.removeOptions();
-            layout.setOriginalWriter(null);
-            layout.setFastStringWriter(null);
-        }
-
+        encodeScript(fc, layout);
+        layout.removeOptions();
         layout.setBuildOptions(false);
-    }
-
-    @Override
-    public boolean getRendersChildren() {
-        return false;
     }
 
     protected void encodeScript(final FacesContext fc, final Layout layout) throws IOException {
@@ -143,7 +120,9 @@ public class LayoutRenderer extends CoreRenderer {
 
         final Object layoutOptions = layout.getOptions();
         if (layoutOptions instanceof LayoutOptions) {
-            wb.append(",options:" + ((LayoutOptions) layoutOptions).toJson());
+            LayoutOptions options = (LayoutOptions) layoutOptions;
+            encodeUnits(fc, layout, options);
+            wb.append(",options:" + options.toJson());
         }
         else if (layoutOptions instanceof String) {
             // already serialized as JSON string
@@ -156,5 +135,15 @@ public class LayoutRenderer extends CoreRenderer {
         encodeClientBehaviors(fc, layout);
 
         wb.finish();
+    }
+
+    protected void encodeUnits(FacesContext context, Layout layout, LayoutOptions options) throws IOException {
+        for (UIComponent child : layout.getChildren()) {
+            if (child.isRendered() && child instanceof LayoutPane) {
+                LayoutPane unit = (LayoutPane) child;
+                unit.setPaneSelector("#" + ComponentUtils.escapeSelector(unit.getClientId(context)));
+                options.addOption(LayoutPane.PropertyKeys.paneSelector.toString(), unit.getPaneSelector());
+            }
+        }
     }
 }

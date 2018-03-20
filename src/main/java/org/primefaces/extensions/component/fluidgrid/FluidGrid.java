@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -281,7 +281,6 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
             throw new FacesException("Value in FluidGrid must be of type Collection / List");
         }
 
-        @SuppressWarnings("unchecked")
         final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
         for (final FluidGridItem fluidGridItem : col) {
             if (key.equals(fluidGridItem.getKey())) {
@@ -309,7 +308,6 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
                     throw new FacesException("Value in FluidGrid must be of type Collection / List");
                 }
 
-                @SuppressWarnings("unchecked")
                 final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
                 for (final FluidGridItem fluidGridItem : col) {
                     processFluidGridDynamicItems(context, phaseId, fluidGridItem);
@@ -337,7 +335,6 @@ public class FluidGrid extends AbstractDynamicData implements Widget, ClientBeha
                 throw new FacesException("Value in FluidGrid must be of type Collection / List");
             }
 
-            @SuppressWarnings("unchecked")
             final Collection<FluidGridItem> col = (Collection<FluidGridItem>) value;
             for (final FluidGridItem fluidGridItem : col) {
                 if (visitFluidGridDynamicItems(context, callback, fluidGridItem)) {

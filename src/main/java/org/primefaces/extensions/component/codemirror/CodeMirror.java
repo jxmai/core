@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -401,7 +401,6 @@ public class CodeMirror extends HtmlInputTextarea implements ClientBehaviorHolde
         return ComponentUtils.resolveWidgetVar(getFacesContext(), this);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void broadcast(final FacesEvent event) throws AbortProcessingException {
         super.broadcast(event);

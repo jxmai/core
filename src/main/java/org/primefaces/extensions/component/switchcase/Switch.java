@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package org.primefaces.extensions.component.switchcase;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.faces.FacesException;
 import javax.faces.component.UIComponent;
@@ -26,8 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.FacesEvent;
 import javax.faces.event.PhaseId;
-
-import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * Component class for the <code>Switch</code> component.
@@ -55,7 +54,7 @@ public class Switch extends UIComponentBase {
 
         @Override
         public String toString() {
-            return ((this.toString != null) ? this.toString : super.toString());
+            return toString != null ? toString : super.toString();
         }
     }
 
@@ -80,16 +79,15 @@ public class Switch extends UIComponentBase {
         DefaultCase caseToRender = null;
         DefaultCase defaultCase = null;
 
-        for (UIComponent child : this.getChildren()) {
+        for (UIComponent child : getChildren()) {
             child.setRendered(false);
 
             if (child instanceof Case) {
                 final Case caseComponent = (Case) child;
-                final Object evaluate = this.getValue();
+                final Object evaluate = getValue();
                 final Object caseValue = caseComponent.getValue();
 
-                // TODO: switch this to Objects.equals in Java7
-                if (ObjectUtils.equals(evaluate, caseValue)) {
+                if (Objects.equals(evaluate, caseValue)) {
                     caseToRender = caseComponent;
                 }
             }

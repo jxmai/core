@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -112,7 +112,6 @@ public class PreRenderSourceListener implements ComponentSystemEventListener, Se
             return;
         }
 
-        @SuppressWarnings("unchecked")
         Map<String, Object> contextValues = (Map<String, Object>) masterDetailLevel.getAttributes().get(MasterDetail.CONTEXT_VALUES);
         if (contextValues == null) {
             contextValues = new HashMap<String, Object>();

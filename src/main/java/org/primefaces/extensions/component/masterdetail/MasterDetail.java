@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -305,7 +305,6 @@ public class MasterDetail extends UIComponentBase {
 
         // get resolved context value
         Object contextValue = null;
-        @SuppressWarnings("unchecked")
         Map<String, Object> contextValues = (Map<String, Object>) mdl.getAttributes().get(CONTEXT_VALUES);
         if (contextValues != null) {
             contextValue = contextValues.get(RESOLVED_CONTEXT_VALUE + source);

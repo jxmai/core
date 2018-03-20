@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ public class DynaFormLabel extends AbstractDynaFormElement {
     private String targetClientId;
     private boolean targetRequired = false;
     private boolean targetValid = true;
+    private String styleClass;
 
     public DynaFormLabel(String value, boolean escape, int colspan, int rowspan, int row, int column, boolean extended) {
         super(colspan, rowspan, row, column, extended);
@@ -81,12 +82,21 @@ public class DynaFormLabel extends AbstractDynaFormElement {
         this.targetValid = targetValid;
     }
 
+    public String getStyleClass() {
+        return styleClass;
+    }
+
+    public void setStyleClass(final String styleClass) {
+        this.styleClass = styleClass;
+    }
+
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).append("value", value).append("escape", escape)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                    .append("value", value)
+                    .append("escape", escape)
                     .append("forControl",
-                                (forControl != null ? forControl.getKey()
-                                            : "null"))
+                                (forControl != null ? forControl.getKey() : "null"))
                     .append("colspan", getColspan())
                     .append("rowspan", getRowspan()).append("row", getRow())
                     .append("column", getColumn())

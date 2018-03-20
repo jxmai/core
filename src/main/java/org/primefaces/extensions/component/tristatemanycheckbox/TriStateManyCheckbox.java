@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -170,7 +170,6 @@ public class TriStateManyCheckbox extends HtmlSelectManyCheckbox implements Widg
 
     @Override
     protected void validateValue(final FacesContext context, final Object value) {
-        @SuppressWarnings("unchecked")
         Map<Object, Object> mapValues = (Map) value;
 
         // call all validators

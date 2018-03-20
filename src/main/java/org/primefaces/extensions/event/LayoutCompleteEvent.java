@@ -1,5 +1,5 @@
 /**
- * Copyright 2011-2017 PrimeFaces Extensions
+ * Copyright 2011-2018 PrimeFaces Extensions
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,6 @@ import org.primefaces.event.AbstractAjaxBehaviorEvent;
  * @version $Revision$
  * @since 1.1.0
  */
-@SuppressWarnings("serial")
 public class LayoutCompleteEvent extends AbstractAjaxBehaviorEvent {
 
     public LayoutCompleteEvent(final UIComponent component, final Behavior behavior) {
