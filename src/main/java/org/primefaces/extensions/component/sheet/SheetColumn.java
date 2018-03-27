@@ -42,20 +42,6 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * Properties that are tracked by state saving.
      */
     enum PropertyKeys {
-        /**
-         * The header text to display for the column
-         */
-        headerText,
-
-        /**
-         * Flag indicating whether or not the column is read only
-         */
-        readonly,
-
-        /**
-         * Flag indicating whether or not a cell is read only
-         */
-        readonlyCell,
 
         /**
          * The width of the column
@@ -66,6 +52,82 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
          * The type of the column (text, numeric, etc)
          */
         colType,
+
+        /**
+         * The header text to display for the column
+         */
+        headerText,
+
+        /**
+         * Password mask asterisk * by default
+         */
+        passwordHashSymbol,
+
+        /**
+         * Password fixed length
+         */
+        passwordHashLength,
+
+        /**
+         * Numbers can be formatted to look like currency, percentages, times, or even plain old numbers with decimal places, thousands, and abbreviations.
+         */
+        numericPattern,
+
+        /**
+         * Numbers such as currency can be configured for a Locale. Default to en_us.
+         */
+        numericLocale,
+
+        /**
+         * Moment.js date format for colType="date". Default is "DD/MM/YYYY"
+         */
+        dateFormat,
+
+        /**
+         * JSON config for coltype="date". DatePicker additional options (see https://github.com/dbushell/Pikaday#configuration)
+         */
+        datePickerConfig,
+
+        /**
+         * Moment.js time format for colType="date". Default is "h:mm:ss a"
+         */
+        timeFormat,
+
+        /**
+         * If true, the autocomplete cells will only accept values that are defined in the source array. Default true.
+         */
+        autoCompleteStrict,
+
+        /**
+         * If true, allows manual input of value that does not exist in the source. In this case, the field background highlight becomes red and the selection
+         * advances to the next cell.
+         */
+        autoCompleteAllowInvalid,
+
+        /**
+         * Number of rows visible in the autocomplete dropdown.
+         */
+        autoCompleteVisibleRows,
+
+        /**
+         * If true, trims the dropdown to fit the cell size. Default to true.
+         */
+        autoCompleteTrimDropdown,
+
+        /**
+         * List of values to display in colType="dropdown" or "autocomplete".
+         */
+        selectItems,
+
+        /**
+         * Flag indicating whether or not the column is read only
+         */
+        readonly,
+
+        /**
+         * Flag indicating whether or not a cell is read only
+         */
+        readonlyCell,
 
         /**
          * the style class for the cell
@@ -109,7 +171,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setHeaderText(String value) {
+    public void setHeaderText(final String value) {
         getStateHelper().put(PropertyKeys.headerText, value);
     }
 
@@ -119,7 +181,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @return
      */
     public String getHeaderText() {
-        Object result = getStateHelper().eval(PropertyKeys.headerText, null);
+        final Object result = getStateHelper().eval(PropertyKeys.headerText, null);
         if (result == null) {
             return null;
         }
@@ -131,7 +193,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setReadonly(Boolean value) {
+    public void setReadonly(final Boolean value) {
         getStateHelper().put(PropertyKeys.readonly, value);
     }
 
@@ -149,7 +211,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setReadonlyCell(Boolean value) {
+    public void setReadonlyCell(final Boolean value) {
         getStateHelper().put(PropertyKeys.readonlyCell, value);
     }
 
@@ -167,7 +229,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setColWidth(Integer value) {
+    public void setColWidth(final Integer value) {
         getStateHelper().put(PropertyKeys.colWidth, value);
     }
 
@@ -177,7 +239,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @return
      */
     public Integer getColWidth() {
-        Object result = getStateHelper().eval(PropertyKeys.colWidth, null);
+        final Object result = getStateHelper().eval(PropertyKeys.colWidth, null);
         if (result == null) {
             return null;
         }
@@ -189,19 +251,111 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setColType(String value) {
+    public void setColType(final String value) {
         getStateHelper().put(PropertyKeys.colType, value);
     }
 
     /**
      * the Handsontable column type.
-     * <p>
-     * TODO make this an enum and limit choices
-     *
-     * @return
      */
     public String getColType() {
         return getStateHelper().eval(PropertyKeys.colType, "text").toString();
+    }
+
+    public Boolean isAutoCompleteAllowInvalid() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteAllowInvalid, Boolean.FALSE).toString());
+    }
+
+    public void setAutoCompleteAllowInvalid(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteAllowInvalid, value);
+    }
+
+    public Boolean isAutoCompleteStrict() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteStrict, Boolean.TRUE).toString());
+    }
+
+    public void setAutoCompleteStrict(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteStrict, value);
+    }
+
+    public Boolean isAutoCompleteTrimDropdown() {
+        return Boolean.valueOf(getStateHelper().eval(PropertyKeys.autoCompleteTrimDropdown, Boolean.TRUE).toString());
+    }
+
+    public void setAutoCompleteTrimDropdown(final Boolean value) {
+        getStateHelper().put(PropertyKeys.autoCompleteTrimDropdown, value);
+    }
+
+    public void setAutoCompleteVisibleRows(final Integer value) {
+        getStateHelper().put(PropertyKeys.autoCompleteVisibleRows, value);
+    }
+
+    public Integer getAutoCompleteVisibleRows() {
+        return (Integer) getStateHelper().eval(PropertyKeys.autoCompleteVisibleRows, null);
+    }
+
+    public Object getSelectItems() {
+        return getStateHelper().eval(PropertyKeys.selectItems, null);
+    }
+
+    public void setSelectItems(final Object selectItems) {
+        getStateHelper().put(PropertyKeys.selectItems, selectItems);
+    }
+
+    public Integer getPasswordHashLength() {
+        return (Integer) getStateHelper().eval(PropertyKeys.passwordHashLength, null);
+    }
+
+    public void setPasswordHashLength(final Integer _passwordHashLength) {
+        getStateHelper().put(PropertyKeys.passwordHashLength, _passwordHashLength);
+    }
+
+    public void setPasswordHashSymbol(final String _passwordHashSymbol) {
+        getStateHelper().put(PropertyKeys.passwordHashSymbol, _passwordHashSymbol);
+    }
+
+    public String getPasswordHashSymbol() {
+        return (String) getStateHelper().eval(PropertyKeys.passwordHashSymbol, "*");
+    }
+
+    public void setNumericPattern(final String _numericPattern) {
+        getStateHelper().put(PropertyKeys.numericPattern, _numericPattern);
+    }
+
+    public String getNumericPattern() {
+        return (String) getStateHelper().eval(PropertyKeys.numericPattern, "0 a");
+    }
+
+    public String getNumericLocale() {
+        return (String) getStateHelper().eval(PropertyKeys.numericLocale, "en-US");
+    }
+
+    public void setNumericLocale(final String locale) {
+        getStateHelper().put(PropertyKeys.numericLocale, locale);
+    }
+
+    public void setDateFormat(final String _dateFormat) {
+        getStateHelper().put(PropertyKeys.dateFormat, _dateFormat);
+    }
+
+    public String getDateFormat() {
+        return (String) getStateHelper().eval(PropertyKeys.dateFormat, "DD/MM/YYYY");
+    }
+
+    public void setDatePickerConfig(final String _datePickerConfig) {
+        getStateHelper().put(PropertyKeys.datePickerConfig, _datePickerConfig);
+    }
+
+    public String getDatePickerConfig() {
+        return (String) getStateHelper().eval(PropertyKeys.datePickerConfig, null);
+    }
+
+    public void setTimeFormat(final String _timeFormat) {
+        getStateHelper().put(PropertyKeys.timeFormat, _timeFormat);
+    }
+
+    public String getTimeFormat() {
+        return (String) getStateHelper().eval(PropertyKeys.timeFormat, "h:mm:ss a");
     }
 
     /**
@@ -209,7 +363,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param value
      */
-    public void setStyleClass(String value) {
+    public void setStyleClass(final String value) {
         getStateHelper().put(PropertyKeys.styleClass, value);
     }
 
@@ -219,7 +373,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @return
      */
     public String getStyleClass() {
-        Object result = getStateHelper().eval(PropertyKeys.styleClass, null);
+        final Object result = getStateHelper().eval(PropertyKeys.styleClass, null);
         if (result == null) {
             return null;
         }
@@ -240,7 +394,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param filterBy
      */
-    public void setFilterBy(Object filterBy) {
+    public void setFilterBy(final Object filterBy) {
         getStateHelper().put(PropertyKeys.filterBy, filterBy);
     }
 
@@ -258,7 +412,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param filterValue
      */
-    public void setFilterValue(String filterValue) {
+    public void setFilterValue(final String filterValue) {
         getStateHelper().put(PropertyKeys.filterValue, filterValue);
     }
 
@@ -274,7 +428,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
     /**
      * Update the filterOptions field
      */
-    public void setFilterOptions(Collection<SelectItem> filterOptions) {
+    public void setFilterOptions(final Collection<SelectItem> filterOptions) {
         getStateHelper().put(PropertyKeys.filterOptions, filterOptions);
     }
 
@@ -300,7 +454,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      *
      * @param sheet the owning sheet
      */
-    public void setSheet(Sheet sheet) {
+    public void setSheet(final Sheet sheet) {
         this.sheet = sheet;
     }
 
@@ -314,7 +468,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * Ignore attempts to set the local value for this column, again done by parent.
      */
     @Override
-    public void setValue(Object value) {
+    public void setValue(final Object value) {
         localValue = value;
         setLocalValueSet(true);
     }
@@ -339,7 +493,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * when we become valid, invalidate the whole sheet.
      */
     @Override
-    public void setValid(boolean valid) {
+    public void setValid(final boolean valid) {
         getSheet().setValid(valid);
     }
 
@@ -347,7 +501,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * Sheet handles decoding of all submitted values
      */
     @Override
-    public void processDecodes(FacesContext context) {
+    public void processDecodes(final FacesContext context) {
         // do nothing, done for us by sheet
     }
 
@@ -355,7 +509,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * Sheet handles updating of model
      */
     @Override
-    public void processUpdates(FacesContext context) {
+    public void processUpdates(final FacesContext context) {
         // do nothing, done for us by sheet
     }
 
@@ -372,7 +526,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * Don't do anything when called by inherited behavior. Sheet will call validate directly
      */
     @Override
-    public void processValidators(FacesContext context) {
+    public void processValidators(final FacesContext context) {
         // do nothing, sheet will call validate directly
     }
 
@@ -380,7 +534,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * Process all validators (skip normal UIInput behavior)
      */
     @Override
-    public void validate(FacesContext context) {
+    public void validate(final FacesContext context) {
         if (context == null) {
             throw new NullPointerException();
         }
@@ -396,16 +550,16 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
             return;
         }
 
-        for (Validator validator : validators) {
+        for (final Validator validator : validators) {
             try {
                 validator.validate(context, this, value);
             }
-            catch (ValidatorException ve) {
+            catch (final ValidatorException ve) {
                 // If the validator throws an exception, we're
                 // invalid, and we need to add a message
                 setValid(false);
                 FacesMessage message;
-                String validatorMessageString = getValidatorMessage();
+                final String validatorMessageString = getValidatorMessage();
 
                 if (null != validatorMessageString) {
                     message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -414,11 +568,11 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
                     message.setSeverity(FacesMessage.SEVERITY_ERROR);
                 }
                 else {
-                    Collection<FacesMessage> messages = ve.getFacesMessages();
+                    final Collection<FacesMessage> messages = ve.getFacesMessages();
                     if (null != messages) {
                         message = null;
-                        String cid = getClientId(context);
-                        for (FacesMessage m : messages) {
+                        final String cid = getClientId(context);
+                        for (final FacesMessage m : messages) {
                             context.addMessage(cid, m);
                         }
                     }
@@ -427,7 +581,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
                     }
                 }
                 if (message != null) {
-                    Sheet sheet = getSheet();
+                    final Sheet sheet = getSheet();
                     if (sheet == null) {
                         return;
                     }
@@ -449,10 +603,10 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
      * @param newValue the new value for this column
      * @return true if passes validation, otherwise valse
      */
-    protected boolean validateRequired(FacesContext context, Object newValue) {
+    protected boolean validateRequired(final FacesContext context, final Object newValue) {
         // If our value is valid, enforce the required property if present
         if (isValid() && isRequired() && isEmpty(newValue)) {
-            String requiredMessageStr = getRequiredMessage();
+            final String requiredMessageStr = getRequiredMessage();
             FacesMessage message;
             if (null != requiredMessageStr) {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -465,7 +619,7 @@ public class SheetColumn extends UIInput implements ClientBehaviorHolder {
                             MESSAGE_REQUIRED);
             }
             context.addMessage(getClientId(context), message);
-            Sheet sheet = getSheet();
+            final Sheet sheet = getSheet();
             if (sheet != null) {
                 sheet.getInvalidUpdates().add(
                             new SheetInvalidUpdate(sheet.getRowKeyValue(context), sheet.getColumns().indexOf(this), this, newValue,

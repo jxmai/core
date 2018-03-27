@@ -27,10 +27,10 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         // need to track to avoid recursion
         this.focusing = false;
         // create table
-        this.setupHandsonTable();
+        this._setupHandsonTable();
     },
     
-    setupHandsonTable: function() {
+    _setupHandsonTable: function() {
         var $this = this;
         var options = {
             data: $this.cfg.data,
@@ -44,36 +44,58 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                 row: 0,
                 col: 1
             },
-            cellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
-                Handsontable.cellTypes.text.renderer.apply(this, arguments);
-
-                var styleClass = '';
-                // append row style (if we have one)
-                var rowClass = $this.cfg.rowStyles[row];
-                if (rowClass) {
-                    styleClass = rowClass;
-                }
-                // append cell style (if we have one)
-                var cellClass = $this.cfg.styles['r' + row + '_c' + col];
-                if (cellClass) {
-                    styleClass = styleClass.concat(' ').concat(cellClass);
-                }
-                // check for errors
-                var invalidMessage = $this.cfg.errors[$this.cfg.rowKeys[row] + '_c' + col];
-                if (invalidMessage) {
-                    styleClass = styleClass.concat(' ui-message-error');
-                    td.innerHTML = "<span class='ui-sheet-error' title='" + invalidMessage
-                        + "'><span class='ui-outputlabel-rfi'>*</span>" + value + "</span>";
-                }
-                // every other row highlighting
-                if (row % 2 == 1) {
-                    styleClass = styleClass.concat(' ui-datatable-odd');
-                }
-                td.className = td.className.concat(' ').concat(styleClass);
+            textCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.HtmlRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            passwordCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.PasswordRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            numericCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.NumericRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            checkboxCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            dateCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.DateRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            timeCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.TimeRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            dropdownCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.DropdownRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
+            },
+            autocompleteCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+                Handsontable.renderers.AutocompleteRenderer.apply(this, arguments);
+                $this._defaultCellRenderer(instance, td, row, col, prop, value, cellProperties);
             },
             cells: function (row, col, prop) {
                 var cp = {};
-                cp.renderer = this.cellRenderer;
+                var column = $this.cfg.columns[col];
+                if (column.type === 'password') {
+                    cp.renderer = this.passwordCellRenderer;
+                } else if (column.type === 'numeric') {
+                    cp.renderer = this.numericCellRenderer;
+                } else if (column.type === 'checkbox') {
+                    cp.renderer = this.checkboxCellRenderer;
+                } else if (column.type === 'date') {
+                    cp.renderer = this.dateCellRenderer;
+                } else if (column.type === 'time') {
+                    cp.renderer = this.timeCellRenderer;
+                } else if (column.type === 'dropdown') {
+                    cp.renderer = this.dropdownCellRenderer;
+                } else if (column.type === 'autocomplete') {
+                    cp.renderer = this.autocompleteCellRenderer;
+                } else {
+                    cp.renderer = this.textCellRenderer;
+                }
                 var readonly = $this.cfg.readOnly['r' + row + '_c' + col];
                 if (readonly) {
                     cp.readOnly = true;
@@ -175,9 +197,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                         $(TH).find('input').change(function () {
                             $this.filterchange($this, col, this.value, false)
                         }).keydown(function (e) {
-                            $this.keyDown($this, e)
+                            $this.filterKeyDown($this, e)
                         }).keyup(function (e) {
-                            $this.keyUp($this, e)
+                            $this.filterKeyUp($this, e)
                         }).focusin(function () {
                             $this.filterFocusIn($this, this)
                         }).focusout(function () {
@@ -198,9 +220,9 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
                         $(TH).find('select').change(function () {
                             $this.filterchange($this, col, this.value, true)
                         }).keydown(function (e) {
-                            $this.keyDown($this, e)
+                            $this.filterKeyDown($this, e)
                         }).keyup(function (e) {
-                            $this.keyUp($this, e)
+                            $this.filterKeyUp($this, e)
                         }).focusin(function () {
                             $this.filterFocusIn($this, this)
                         }).focusout(function () {
@@ -246,9 +268,11 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         // so we needed to NOT enabled this behavior if the given sheet has the ajax function defined.
         // TODO may make this conditional on whether or not sorting is enabled
         if (!($this.hasBehavior('columnSelect'))) {
-            Handsontable.hooks.add('beforeOnCellMouseDown',
-                    $this.handleHotBeforeOnCellMouseDown, $this.ht);
+            $this.ht.addHook('beforeOnCellMouseDown', $this.handleHotBeforeOnCellMouseDown);
         }
+        
+        // add before key down hook
+        $this.ht.addHook('beforeKeyDown', $this.handleHotBeforeKeyDown);
 
         // Check if data exist. If not insert No Records Found message
         if (options.data.length == 0) {
@@ -278,14 +302,53 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             $this.ht.render();
         }); 
     },
+    
+    _defaultCellRenderer: function (instance, td, row, col, prop, value, cellProperties) {
+        var styleClass = '';
+        // append row style (if we have one)
+        var rowClass = this.cfg.rowStyles[row];
+        if (rowClass) {
+            styleClass = rowClass;
+        }
+        // append cell style (if we have one)
+        var cellClass = this.cfg.styles['r' + row + '_c' + col];
+        if (cellClass) {
+            styleClass = styleClass.concat(' ').concat(cellClass);
+        }
+        // check for errors
+        var invalidMessage = this.cfg.errors[this.cfg.rowKeys[row] + '_c' + col];
+        if (invalidMessage) {
+            styleClass = styleClass.concat(' ui-message-error');
+            td.innerHTML = "<span class='ui-sheet-error' title='" + invalidMessage
+                + "'><span class='ui-outputlabel-rfi'>*</span>" + value + "</span>";
+        }
+        // every other row highlighting
+        if (row % 2 == 1) {
+            styleClass = styleClass.concat(' ui-datatable-odd');
+        } else {
+            styleClass = styleClass.concat(' ui-datatable-even');
+        }
+        td.className = td.className.concat(' ').concat(styleClass);
+    },
 
-    // updates the row with the new data value
-    updateData: function (rowKey, v) {
-        for (var i = 0; i < this.cfg.rowKeys.length; i++)
-            if (this.cfg.rowKeys[i] == rowKey) {
-                this.cfg.data[i] = v;
-                return;
-            }
+    /**
+     * Updates the row with the new data value
+     * 
+     * @param rowIndex the row index
+     * @param data the array of data values for the columns
+     * @param styles the JSON cell style updates
+     * @param readonly the JSON cell read only updates
+     */
+    updateData: function (rowIndex, data, styles, readonly) {
+        // merge the new styles in
+        $.extend(this.cfg.styles, styles);
+        //merge the new readonly cells in
+        $.extend(this.cfg.readOnly, readonly);
+        
+        // update any data rows
+        if (rowIndex <= this.cfg.rowKeys.length) {
+            this.cfg.data[rowIndex] = data;
+        }
     },
 
     // true if sheet has assigned behavior, otherwise false
@@ -303,10 +366,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         sheet.filterChanged = true;
 
         if (firenow) {
-            if (sheet.hasBehavior('filter')) {
-                sheet.filterChanged = false;
-                sheet.cfg.behaviors['filter'].call(this, 'filter');
-            }
+            sheet.filter();
         }
     },
 
@@ -329,7 +389,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
     },
 
     // eat enter keys for filter inputs so they do not submit form
-    keyDown: function (sheet, e) {
+    filterKeyDown: function (sheet, e) {
         e.stopImmediatePropagation();
         var key = e.which, keyCode = $.ui.keyCode;
         if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
@@ -338,7 +398,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
     },
 
     // again, eat enter key. but also fire filter event on enter
-    keyUp: function (sheet, e) {
+    filterKeyUp: function (sheet, e) {
         e.stopImmediatePropagation();
         var key = e.which, keyCode = $.ui.keyCode;
         if ((key === keyCode.ENTER || key === keyCode.NUMPAD_ENTER)) {
@@ -346,10 +406,7 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
             sheet.ht.destroyEditor(true);
 
             $(e.target).change();
-            if (sheet.hasBehavior('filter')) {
-                sheet.filterChanged = false;
-                sheet.cfg.behaviors['filter'].call(this, 'filter');
-            }
+            sheet.filter();
             e.preventDefault();
         }
     },
@@ -370,14 +427,12 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         $(inp).focus();
         sheet.focusing = false;
 
-        if (sheet.filterChanged && sheet.hasBehavior('filter')) {
-            sheet.filterChanged = false;
-            sheet.cfg.behaviors['filter'].call(this, 'filter');
-        }
+        sheet.filter();
     },
 
     // remove focused filter tracking when tabbing off
     filterFocusOut: function (sheet, inp) {
+        sheet.filter();
         sheet.focusInput.val(null);
     },
     
@@ -394,6 +449,14 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         }
     },
     
+    // run filtering if it has changed
+    filter: function () {
+        if (this.filterChanged && this.hasBehavior('filter')) {
+            this.filterChanged = false;
+            this.cfg.behaviors['filter'].call(this, 'filter');
+        }
+    },
+    
     // Remove the row from the sheet
     removeRow: function (index) {
         if (this.ht) {
@@ -406,5 +469,30 @@ PrimeFaces.widget.ExtSheet = PrimeFaces.widget.BaseWidget.extend({
         if (coords.row < 0) {
             event.stopImmediatePropagation();
         }
+    },
+    
+    handleHotBeforeKeyDown: function (e) {
+        var row = this.getSelectedLast()[0];
+        var col = this.getSelectedLast()[1];
+        var celltype = this.getCellMeta(row, col).type;
+        
+        // prevent Alpha chars in numeric sheet cells
+        if (celltype === "numeric") {
+            var key = e.charCode || e.keyCode || 0;
+            // allow backspace, tab, delete, enter, arrows, numbers and keypad numbers
+            // ONLY home, end, F5, F12, minus (-), period (.)
+            //console.log('Key: ' + key + ' Shift: ' + e.shiftKey);
+            var isNumeric = ((key == 8) || (key == 9) || (key == 13) || (key == 46)
+                            || (key == 116) || (key == 123) || (key == 189) || (key == 190) 
+                            || ((key >= 35) && (key <= 40)) || ((key >= 48) && (key <= 57)) 
+                            || ((key >= 96) && (key <= 105)));
+
+            if (!isNumeric || e.shiftKey) {
+                // prevent alpha characters
+                e.stopImmediatePropagation();
+                e.preventDefault();
+            }
+        }
     }
+    
 });
